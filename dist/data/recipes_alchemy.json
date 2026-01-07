@@ -1,0 +1,425 @@
+[
+  {
+    "id": 1,
+    "name": "Potion of Climbing",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "When you drink this potion, you gain a Climb Speed equal to your Speed for 1 hour. During this time, you have Advantage on Strength (Athletics) checks to climb.",
+    "description": "This potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 2,
+    "name": "Fake Blood",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "Crafted from bloodroot and infused with small quantities of powdered iron, this concoction looks, smell and even tastes the same as the real deal. An investigation of 15 or higher or any level of identification magic reveals its true nature.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 3,
+    "name": "Potion of Growth",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you gain the “enlarge” effect of the Enlarge/Reduce spell for 10 minutes (no Concentration required).",
+    "description": "The red in the potion’s liquid continuously expands from a tiny bead to color the clear liquid around it and then contracts. Shaking the bottle fails to interrupt this process.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 4,
+    "name": "Potion of Poison",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This concoction looks, smells, and tastes like a Potion of Healing or another beneficial potion. However, it is actually poison masked by illusion magic. Identify reveals its true nature.\nIf you drink this potion, you take 4d6 Poison damage and must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 1 hour.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 5,
+    "name": "Bottled Breath",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This bottle contains a breath of elemental air. When you inhale it, you either exhale it or hold it.\nIf you exhale the breath, you gain the effect of the gust of wind spell. If you hold the breath, you don't need to breathe for 1 hour, though you can end this benefit early (for example, to speak). Ending it early doesn't give you the benefit of exhaling the breath.",
+    "source": "PotA"
+  },
+  {
+    "id": 6,
+    "name": "Mage's Blood",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This flask contains a viscous liquid that can be smeared on a weapon or up to 3 pieces of ammunition as an action. When you hit a creature with a weapon or piece of ammunition coated in the liquid, the target must succeed on a DC 15 Constitution saving throw or be poisoned for 1 minute. While poisoned this way, the creature has disadvantage on saving throws against spells and other magical effects.\nOnce applied, the poison retains potency for 1 minute before drying.",
+    "source": "WG"
+  },
+  {
+    "id": 7,
+    "name": "Potion of Monstrosity",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you are affected as by the Polymorph spell (save DC 13, no concentration required) for 1 hour or until you are reduced to 0 hit points. The creature you transform into is determined by rolling a d8 on the table below. Whenever you take damage while transformed in this way, you must succeed on a DC 13 Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn and can’t see or hear other creatures within 60 feet of you.",
+    "description": "The glass surface of the bottle containing this magical potion forms a snarling visage. It growls faintly when stirred, but has no true sentience.",
+    "source": "WG"
+  },
+  {
+    "id": 8,
+    "name": "Oil of Etherealness",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "One vial of this oil can cover one Medium or smaller creature, along with the equipment it’s wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the Etherealness spell for 1 hour.",
+    "description": "Beads of this cloudy, gray oil form on the outside of its container and quickly evaporate.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 9,
+    "name": "Potion of Diminution",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain the “reduce” effect of the Enlarge/Reduce spell for 1d4 hours (no Concentration required).",
+    "description": "The red in the potion’s liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 10,
+    "name": "Potion of Heroism",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain 10 Temporary Hit Points that last for 1 hour. For the same duration, you are under the effect of the Bless spell (no Concentration required).",
+    "description": "This potion’s blue liquid bubbles and steams as if boiling.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 11,
+    "name": "Potion of Invulnerability",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "For 1 minute after you drink this potion, you have Resistance to all damage.",
+    "description": "This potion’s syrupy liquid looks like liquefied iron.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 12,
+    "name": "Potion of Mind Control",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "When you drink a potion of mind control, you can cast a dominate spell (save DC 15) on a specific creature if you do so before the end of your next turn. If you don’t, the potion is wasted.\nA potion of mind control produces the effect of a dominate beast or dominate person spell (save DC 15). If the target’s initial saving throw fails, the effect lasts for 1 hour, with no concentration required on your part. The charmed creature has disadvantage on new saving throws to break the effect during this time.",
+    "source": "TftYP"
+  },
+  {
+    "id": 13,
+    "name": "Potion of Flying",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "When you drink this potion, you gain a Fly Speed equal to your Speed for 1 hour and can hover. If you’re in the air when the potion wears off, you fall unless you have some other means of staying aloft.",
+    "description": "This potion’s clear liquid floats at the top of its container and has cloudy white impurities drifting in it.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 14,
+    "name": "Potion of Greater Invisibility",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "This potion’s container looks empty but feels as though it holds liquid. When you drink the potion, you have the Invisible condition for 1 hour.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Invisibility",
+    "category": "Alchemy",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "This potion’s container looks empty but feels as though it holds liquid. When you drink the potion, you have the Invisible condition for 1 hour. The effect ends early if you make an attack roll, deal damage, or cast a spell.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 1,
+    "name": "Soothsalts",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Soothsalts are derived from a naturally occurring crystalline. Soothsalts are consumed orally in lozenge- sized doses, and frequent users can be identified by the telltale crimson stain around their mouths. A creature subjected to a dose of soothsalts gains advantage on all Intelligence checks for 1d4 hours. For each dose of soothsalts consumed, the creature must succeed on a DC 15 Constitution saving throw or gain one level of exhaustion—an eﬀect which is cumulative with multiple doses.",
+    "source": "PHB'24"
+  },
+  {
+    "id": 2,
+    "name": "Potion of Renewal",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "When you drink this potion, you regain an expended spell slot of level 1.",
+    "source": "WG"
+  },
+  {
+    "id": 3,
+    "name": "Potion of Waterbreathing",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "You can breathe underwater for 24 hours after drinking this potion.\n\nThis potion’s cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 4,
+    "name": "Potion of Resistance",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you have Resistance to one type of damage for 1 hour. The DM chooses the type or determines it randomly by rolling on the following table.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 5,
+    "name": "Invisible Ink",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "1 ounce bottle of ink that can only be made visible with spells, traits or items that see the invisible, or by applying a mild acid.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 6,
+    "name": "Potion of Renewal (Greater)",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you regain an expended spell slot of level 3 or lower.",
+    "source": "WG"
+  },
+  {
+    "id": 7,
+    "name": "Potion of Magic Resistance",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you gain advantage on saving throws against spells and other magical effects for 1 hour.",
+    "source": "WG"
+  },
+  {
+    "id": 8,
+    "name": "Potion of Gaseus Form",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain the effect of the Gaseous Form spell for 1 hour (no Concentration required) or until you end the effect as a Bonus Action.",
+    "description": "This potion’s container seems to hold fog that moves and pours like water.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 9,
+    "name": "Potion of Aqueous Form",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you transform into a pool of water. You return to your true form after 10 minutes or if you are incapacitated or die. You're under the following eﬀects while in this form:\nLiquid Movement. You have a swimming speed of 30 feet. You can move over or through other liquids. You can enter and occupy the space of another creature. You can rise up to your normal height, and you can pass through even Tiny openings. You extinguish nonmagical flames in any space you enter.\nWatery Resilience. You have resistance to nonmagical damage. You also have advantage on Strength, Dexterity, and Constitution saving throws.\nLimitations. You can't talk, attack, cast spells, or activate magic items. Any objects you were carrying or wearing meld into your new form and are inaccessible, though you continue to be aﬀected by anything you're wearing, such as armor.",
+    "source": "Theros"
+  },
+  {
+    "id": 10,
+    "name": "Potion of Mind Reading",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain the effect of the Detect Thoughts spell (save DC 13) for 10 minutes (no Concentration required).",
+    "description": "This potion’s dense, purple liquid has an ovoid cloud of pink floating in it.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 11,
+    "name": "Potion of Clairvoyance",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain the effect of the Clairvoyance spell (no Concentration required).",
+    "source": "Free Rules"
+  },
+  {
+    "id": 12,
+    "name": "Potion of Renewal (Superior)",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you regain an expended spell slot of level 5 or lower.",
+    "source": "WG"
+  },
+  {
+    "id": 13,
+    "name": "Potion of Longevity",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "When you drink this potion, your physical age is reduced by 1d6 + 6 years, to a minimum of 13 years. Each time you subsequently drink a Potion of Longevity, there is 10 percent cumulative chance that you instead age by 1d6 + 6 years.",
+    "description": "Suspended in this amber liquid is a tiny heart that, against all reason, is still beating. These ingredients vanish when the potion is opened.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 14,
+    "name": "Potion of Vitality",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "When you drink this potion, it removes any Exhaustion levels you have and ends the Poisoned condition on you. For the next 24 hours, you regain the maximum number of Hit Points for any Hit Point Die you spend.",
+    "description": "This potion’s crimson liquid regularly pulses with dull light, calling to mind a heartbeat.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Truesight",
+    "category": "Alchemy",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "Drinking this potion grants truesight with a range of 120\nfeet for 1 hour.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 1,
+    "name": "Smoke grenade",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "As an action, a character can throw a grenade at a point up to 60 feet away. With a grenade launcher, the character can propel the grenade up to 120 feet away.\n\nOne round after a smoke grenade lands, it emits a cloud of smoke that creates a heavily obscured area in a 20-foot radius. A moderate wind (at least 10 miles per hour) disperses the smoke in 4 rounds; a strong wind (20 or more miles per hour) disperses it in 1 round.",
+    "source": "PHB'14"
+  },
+  {
+    "id": 2,
+    "name": "Potion of Empowerment",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "When you drink this potion, you gain a bonus +1 to your spell attack rolls and to the saving throw DCs of your spells for 1 minute.",
+    "source": "WG"
+  },
+  {
+    "id": 3,
+    "name": "Blasting Powder",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "This volatile alchemical powder comes in a small pouch. When ignited by an open flame or a fuse, the powder explodes. Each creature within 5 feet of the exploding pouch must make a DC 13 Dexterity saving throw, taking 3d6 bludgeoning damage on a failed save, or half as much damage on a successful one. A character can bind multiple pouches of blasting powder together so they explode at the same time. Each additional pouch increases the damage by 1d6 (maximum of 10d6) and the blast radius by 5 feet (maximum of 20 feet).",
+    "source": "Wildemount"
+  },
+  {
+    "id": 4,
+    "name": "Potion of Fire Breath",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "After drinking this potion, you can take a Bonus Action to exhale fire at a target within 30 feet of yourself. The target makes a DC 13 Dexterity saving throw, taking 4d6 Fire damage on a failed save or half as much damage on a successful one. The effect ends after you exhale the fire three times or when 1 hour has passed.\n\nThis potion’s orange liquid flickers, and smoke fills the top of the container and wafts out whenever it is opened.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 5,
+    "name": "Oil of Slipperiness",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "One vial of this oil can cover one Medium or smaller creature, along with the equipment it’s wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the Freedom of Movement spell for 8 hours. Alternatively, the oil can be poured on the ground as a Magic action, where it covers a 10-foot square, duplicating the effect of the Grease spell in that area for 8 hours.",
+    "description": "This sticky, black unguent is thick and heavy, but it flows quickly when poured.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 6,
+    "name": "Philter of Love",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "The next time you see a creature within 10 minutes after drinking this philter, you are charmed by that creature and have the Charmed condition for 1 hour.",
+    "description": "This rose-hued, effervescent liquid contains one easy-to-miss bubble shaped like a heart.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 7,
+    "name": "Potion of Pugilism",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "After you drink this potion, each Unarmed Strike you make deals an extra 1d6 Force damage on a hit. This effect lasts 10 minutes.",
+    "description": "This potion is a thick green fluid that tastes like spinach.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 8,
+    "name": "Potion of Water Breathing",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "You can breathe underwater for 24 hours after drinking this potion.",
+    "description": "This potion’s cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 9,
+    "name": "Potion of Empowerment (Greater)",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you gain a bonus +2 to your spell attack rolls and to the saving throw DCs of your spells for 1 minute.",
+    "source": "WG"
+  },
+  {
+    "id": 10,
+    "name": "Pixie Dust",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "As an action, you can sprinkle this dust on yourself or another creature you can see within 5 feet of you. The recipient gains a flying speed of 30 feet and the ability to hover for 1 minute. If the creature is airborne when this eﬀect ends, it falls safely to the ground, taking no damage and landing on its feet. A small packet holds enough pixie dust for one use.",
+    "source": "WildBeyondWitchlight"
+  },
+  {
+    "id": 11,
+    "name": "Potion of Luck",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "When you drink the potion, you become blessed with extraordinary luck. Whenever you make an attack roll, an ability check, or a saving throw, or when an attack roll is made against you, you can choose to roll an additional d20. You can choose to do so after you roll the die, but before the outcome is determined. You choose which of the d20s is used for the attack roll, ability check, or saving throw. This effect lasts for 1 hour or until you have used your luck three times.",
+    "source": "WG"
+  },
+  {
+    "id": 12,
+    "name": "Potion of Empowerment (Superior)",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain a bonus +3 to your spell attack rolls and to the saving throw DCs of your spells for 1 minute.",
+    "source": "WG"
+  },
+  {
+    "id": 13,
+    "name": "Potion of Expertise",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, you gain proficiency in a skill of your choice for 1 hour. If you are already proficient in that skill, your proficiency bonus is doubled for any ability check you make using that skill.",
+    "source": "WG"
+  },
+  {
+    "id": 14,
+    "name": "Oil of Sharpness",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Very Rare",
+    "effect": "One vial of this oil can coat one Melee weapon or twenty pieces of ammunition, but only ammunition and Melee weapons that are nonmagical and deal Slashing or Piercing damage are affected. Applying the oil takes 1 minute, after which the oil magically seeps into whatever it coats, turning the coated weapon into a +3 Weapon or the coated ammunition into +3 Ammunition.",
+    "description": "This clear, gelatinous oil sparkles with tiny, ultrathin silver shards.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Speed",
+    "category": "Alchemy",
+    "qualityCategory": "Potency",
+    "rarity": "Very Rare",
+    "effect": "When you drink this potion, you gain the effect of the Haste spell for 1 minute (no Concentration required) without suffering the wave of lethargy that typically occurs when the effect ends.",
+    "description": "This potion’s yellow fluid is streaked with black and swirls on its own.",
+    "source": "Free Rules"
+  }
+]

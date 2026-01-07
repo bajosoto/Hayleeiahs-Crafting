@@ -41,12 +41,13 @@ function IngredientSelector() {
     const loadData = async () => {
       try {
         setLoading(true);
+        const baseUrl = import.meta.env.BASE_URL || '/';
         const [ingredientData, inventoryData, herb, alchemy, poison] = await Promise.all([
-          fetch('/data/ingredients.json').then((res) => res.json()),
-          fetch('/data/inventory.json').then((res) => res.json()),
-          fetch('/data/recipes_herbalism.json').then((res) => res.json()),
-          fetch('/data/recipes_alchemy.json').then((res) => res.json()),
-          fetch('/data/recipes_poison.json').then((res) => res.json())
+          fetch(`${baseUrl}data/ingredients.json`).then((res) => res.json()),
+          fetch(`${baseUrl}data/inventory.json`).then((res) => res.json()),
+          fetch(`${baseUrl}data/recipes_herbalism.json`).then((res) => res.json()),
+          fetch(`${baseUrl}data/recipes_alchemy.json`).then((res) => res.json()),
+          fetch(`${baseUrl}data/recipes_poison.json`).then((res) => res.json())
         ]);
 
         if (!active) return;
