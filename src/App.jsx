@@ -11,7 +11,13 @@ function App() {
       </header>
       <IngredientSelector />
       <footer className="app-footer">
-        <p>Data loads from Supabase when configured; otherwise from local JSON files.</p>
+        <p>
+          Made with 🖤 by{' '}
+          <a href="https://github.com/bajosoto" target="_blank" rel="noreferrer">
+            @bajosoto
+          </a>{' '}
+          for his D&amp;D amigos
+        </p>
       </footer>
     </div>
   );

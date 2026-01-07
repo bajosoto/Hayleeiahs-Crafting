@@ -39,6 +39,13 @@ const normalizeQuality = (value) => {
   return normalized;
 };
 
+const qualityToAttribute = (quality) => {
+  const normalized = normalizeQuality(quality);
+  const lower = normalized.toLowerCase();
+  if (ATTRIBUTE_LABELS[lower]) return lower;
+  return 'potency';
+};
+
 const normalizeIngredientRow = (row) => ({
   name: (row.name || '').trim(),
   potency: Number(row.potency ?? 0),
@@ -375,6 +382,30 @@ function IngredientSelector() {
       return next;
     });
     setError('');
+  };
+
+  const openResultModal = (nextResult) => {
+    setResult(nextResult);
+    setResultModalOpen(true);
+  };
+
+  const handleAlmanacSelect = (recipe) => {
+    if (!recipe || !recipe.discovered) return;
+    const quality = normalizeQuality(recipe.qualityCategory);
+    const dominantAttr = qualityToAttribute(quality);
+    const slot = Number(recipe.recipeNo || recipe.id || 1);
+    const roll = Math.max(0, Math.min(14, slot - 1));
+    const tierIndex = QUALITY_ORDER[quality] ?? 0;
+    openResultModal({
+      recipe,
+      dominantAttribute: dominantAttr,
+      tierIndex,
+      roll,
+      totals: null,
+      usedFallback: false,
+      mode: 'deterministic',
+      wasDiscovered: true
+    });
   };
 
   const persistInventory = async (updates) => {
@@ -778,7 +809,7 @@ function IngredientSelector() {
                   {ingredient.rarity} | {ingredient.source}
                 </p>
                 <p className="inventory-stats">
-                  P {ingredient.potency} / R {ingredient.resonance} / E {ingredient.entropy}
+                  {ingredient.potency} / {ingredient.resonance} / {ingredient.entropy}
                 </p>
               </div>
               <div className="inventory-qty">x{ingredient.quantity}</div>
@@ -805,15 +836,18 @@ function IngredientSelector() {
                   const recipe = almanacEntries[quality]?.[slot];
                   const isDiscovered = recipe?.discovered;
                   return (
-                    <div
+                    <button
                       className={`almanac-slot ${isDiscovered ? 'discovered' : 'unknown'} ${getRarityClass(
                         recipe?.rarity
                       )}`}
                       key={`${quality}-${slot}`}
+                      type="button"
+                      disabled={!isDiscovered}
+                      onClick={() => handleAlmanacSelect(recipe)}
                     >
                       <span className="slot-index">{slot}</span>
                       <span className="slot-name">{isDiscovered ? recipe?.name : '???'}</span>
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -865,17 +899,25 @@ function IngredientSelector() {
               <h3>Edit inventory</h3>
               <div className="inventory-edit">
                 {inventoryRows.map((ingredient) => (
-                  <label className="inventory-edit-row" key={`edit-${ingredient.name}`}>
-                    <span>{ingredient.name}</span>
+                  <div
+                    className={`inventory-edit-row ${getRarityClass(ingredient.rarity)}`}
+                    key={`edit-${ingredient.name}`}
+                  >
+                    <span className="ingredient-name">{ingredient.name}</span>
+                    <span className="ingredient-stats">
+                      {ingredient.potency} / {ingredient.resonance} / {ingredient.entropy}
+                    </span>
                     <input
+                      className="inventory-input"
                       type="number"
                       min="0"
                       value={ingredient.quantity}
                       onChange={(event) =>
                         handleInventoryEdit(ingredient.name, event.target.value)
                       }
+                      aria-label={`Inventory quantity for ${ingredient.name}`}
                     />
-                  </label>
+                  </div>
                 ))}
               </div>
             </div>
