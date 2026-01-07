@@ -1,0 +1,417 @@
+[
+  {
+    "id": 1,
+    "name": "Potion of Comprehension",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "When you drink this potion, you gain the effect of the Comprehend Languages spell for 1 hour.",
+    "description": "This potion’s liquid is a clear concoction with bits of salt and soot swirling in it.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 2,
+    "name": "Potion of Dreamless Sleep",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "Induces deep restful sleep for 8 hours, immune to nightmares.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 3,
+    "name": "Potion of Featherroot",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "Reduce fall speed, negate falling damage for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 4,
+    "name": "Blight Ichor",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This bitter chartreuse concoction is distilled from a fungus native to the Blightshore badlands. The sickly green liqueur harbors potent psychedelic properties. Provided it is neither a construct nor undead, a creature subjected to a dose of blight ichor gains advantage on Intelligence and Wisdom checks, as well as vulnerability to psychic damage, for 1 hour. For each dose of blight ichor consumed, the creature must succeed on a DC 15 Constitution saving throw or become poisoned for 1d6 hours and suﬀer the eﬀects of a confusion spell for 1 minute. An undead creature subjected to a dose of blight ichor gains advantage on all Dexterity checks and is immune to the frightened condition for 1 hour.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 5,
+    "name": "Brew of Babel",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "Baby blue and highly opaque with something white moving in it, just out of view, and eyestrainingly yellow when shaken, this potion provides the ability to speak and understand, but not read or write, a language of choice for 1 hour.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 6,
+    "name": "Oil of Flameward",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "Rub on skin to gain fire resistance for 10 minutes.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 7,
+    "name": "Potion of Advantage",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you gain advantage on one ability check, attack roll, or saving throw of your choice that you make within the next hour. This potion takes the form of a sparkling, golden mist that moves and pours like water.",
+    "source": "WildWitchlight"
+  },
+  {
+    "id": 8,
+    "name": "Potion of Animal Friendship",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, you can cast the level 3 version of the Animal Friendship spell (save DC 13).",
+    "description": "Agitating this potion’s muddy liquid brings little bits into view: a fish scale, a hummingbird feather, a cat claw, or a squirrel hair.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 9,
+    "name": "Tincture of the Vigilant",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "Cannot be surprised for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 10,
+    "name": "Elixir of Health",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "When you drink this potion, it cures any disease afflicting you, and it removes the blinded, deafened, paralyzed, and poisoned conditions.",
+    "description": "The clear red liquid has tiny bubbles of light in it.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 11,
+    "name": "Liquid Luck",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "Visually indistinguishable from water, but tasting and smelling like the drinker’s favourite fruit. Drinking this potion grants the drinker advantage on all deception, Insight and persuasion checks for 3 hours.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 12,
+    "name": "Potion of Barkskin",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "AC becomes 16 for 1 hour (no concentration).",
+    "source": "Homebrew"
+  },
+  {
+    "id": 13,
+    "name": "Potion of Maximum Power",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "The first time you cast a damage-dealing spell of 4th level or lower within 1 minute after drinking the potion, instead of rolling dice to determine the damage dealt, you can instead use the highest number possible for each die. This glowing purple liquid smells of sugar and plum, but it has a muddy taste.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 14,
+    "name": "Reincarnation Dust",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "When this small pouch of purple dust is sprinkled on a dead humanoid or a piece of a dead humanoid, the dust is absorbed by the remains. If willing, the dead creature returns to life with a new body as if the reincarnate spell had been cast on the remains.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Enhanced Reactions",
+    "category": "Herbalism",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "This potion is constantly changing colour and darting from one corner of the container to the other, making it a pretty neat trinket. Drinking it might be more useful, though, as it grants +2 to all saving throws for 1 minute.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 1,
+    "name": "Antitoxin",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "As a Bonus Action, you can drink a vial of Antitoxin to gain Advantage on saving throws to avoid or end the Poisoned condition for 1 hour.",
+    "source": "PHB'24"
+  },
+  {
+    "id": 2,
+    "name": "Healing Mudpack",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Apply to unconscious creature, stabilizes and gives 1 HP.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 3,
+    "name": "Muroosa Balm",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "This paste is known to help prevent sunburn, but it is also a fire retardant. After spending 1 minute applying a quarter pint of muroosa balm to your skin, you gain resistance against fire damage for 1 hour.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 4,
+    "name": "Nightshade Extract",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Grants darkvision 30 ft for 10 minutes.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 5,
+    "name": "Oil of Serenity",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Grants advantage on Wisdom saves vs fear or charm.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 6,
+    "name": "Savant's Tincture",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Advantage on Intelligence checks for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 7,
+    "name": "Soothing Salve",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "A sticky, sour smelling salve that can be applied to wounds. When you expend hit dice to recover hit points while using this salve, you recover an additional 3 hit points for each hit die expended. This eﬀect lasts for 1 hour after applied.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 8,
+    "name": "Tincture of Bear’s Fortitude",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "Advantage on Constitution saves for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 9,
+    "name": "Life's Liquor",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "This potion has a strong pink colour and is completely clear with with the image of a red heart floating in the middle. No matter the angle you look at it, the heart always appears the same. Drinking this potion provides 2d6+2 temporary hit points.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 10,
+    "name": "Potion of Sun’s Grace",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "Gain temporary HP equal to your level at dawn.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 11,
+    "name": "Potion of the Wild Sense",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "Gain advantage on Perception for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 12,
+    "name": "Tincture of Duskflower",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "Stealth checks are made with advantage for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 13,
+    "name": "Clarity Draught",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "Dispel magic (DC 13) on one condition affecting you.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 14,
+    "name": "Potion of Protection",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "A steel grey, mirky liquid with tiny, yellow, green, red, blue, purple, white and black beads floating around in it. Drinking this potion grants the drinker immunity to all status eﬀects apart from prone, grappeled, restrained or unconsious for 1 hour.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Continuous Healing",
+    "category": "Herbalism",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "This murky red potion is highly sought after by soldiers and adventurers. After drinking it, the consumer gains 2d10 HP per turn for 1 minute.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 1,
+    "name": "Potion of Healing",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "Restores 2d4+2 HP.",
+    "description": "Whatever its potency, the potion’s red liquid glimmers when agitated.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 2,
+    "name": "Murgaxor's Elixer of Life",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Whoever drinks this concoction gains advantage on death saving throws for 24 hours",
+    "source": "Strixhaven"
+  },
+  {
+    "id": 3,
+    "name": "Potion of Fire Breath",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "After drinking this potion, you can take a Bonus Action to exhale fire at a target within 30 feet of yourself. The target makes a DC 13 Dexterity saving throw, taking 4d6 Fire damage on a failed save or half as much damage on a successful one. The effect ends after you exhale the fire three times or when 1 hour has passed.",
+    "description": "This potion’s orange liquid flickers, and smoke fills the top of the container and wafts out whenever it is opened.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 4,
+    "name": "Fire Balm",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "An orange, herbal paste used to aid people recovering from ailments. Applying a dose of this paste gives the user a +3 on a single Constitution, Wisdom or Charisma saving throw for the next 14 hours.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 5,
+    "name": "Frostbloom Poultice",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Resistance to cold damage for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 6,
+    "name": "Greater Antitoxin",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "A mirky, pumpkin orange liquid, this potion grants the drinker advantage on saving throws against poison damage or against the poisoned condition for 12 hours. During this period, the drinker also does not take damage over time from any type of poison nor can they drop to 0 hit points from poison damage.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 7,
+    "name": "Keoghtom's Restorative Ointment",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "This glass jar, 3 inches in diameter, contains 3 doses of a thick mixture that smells faintly of aloe. The jar and its contents weigh 1/2 pound. As an action, one dose of the ointment can be swallowed or applied to the skin. The creature that receives it regains 2d8 + 2 hit points, ceases to be poisoned, and is cured of any disease.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 8,
+    "name": "Oil of Natural Armor",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Add +1 to AC for 1 hour.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 9,
+    "name": "Potion of Healing (Greater)",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Restores 4d4 + 4 HP.",
+    "description": "Whatever its potency, the potion’s red liquid glimmers when agitated.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 10,
+    "name": "Potion of Hill Giant Strength",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "When you drink this potion, your Strength score changes to 21 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
+    "description": "This potion’s transparent liquid has floating in it a sliver of light resembling a giant’s fingernail.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 11,
+    "name": "Tea of Refreshment",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "This warm drink removes one level of exhaustion from whoever drinks it.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 12,
+    "name": "Elixir of Renewal",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "Regain 1 HP at start of each turn for 1 minute.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 13,
+    "name": "Potion of Healing (Superior)",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "Restores 8d4 + 8 HP.",
+    "description": "Whatever its potency, the potion’s red liquid glimmers when agitated.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 14,
+    "name": "Potion of Healing (Supreme)",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Very Rare",
+    "effect": "Restores 10d4 + 20 HP.",
+    "description": "Whatever its potency, the potion’s red liquid glimmers when agitated.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 15,
+    "name": "Potion of Vitality",
+    "category": "Herbalism",
+    "qualityCategory": "Potency",
+    "rarity": "Very Rare",
+    "effect": "When you drink this potion, it removes any Exhaustion levels you have and ends the Poisoned condition on you. For the next 24 hours, you regain the maximum number of Hit Points for any Hit Point Die you spend.",
+    "description": "This potion’s crimson liquid regularly pulses with dull light, calling to mind a heartbeat.",
+    "source": "Free Rules"
+  }
+]
