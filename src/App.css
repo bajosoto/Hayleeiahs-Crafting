@@ -25,12 +25,18 @@
   box-sizing: border-box;
 }
 
+html {
+  background-color: #0b1020;
+}
+
 body {
   margin: 0;
   font-family: 'Sora', 'Helvetica Neue', Arial, sans-serif;
   background: linear-gradient(160deg, #0b1020 0%, #111827 45%, #0b132b 100%);
   color: var(--ink);
   min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #0b1020;
 }
 
 body::before {
@@ -59,17 +65,20 @@ p {
 
 .app-shell {
   max-width: 1180px;
+  width: 100%;
   margin: 0 auto;
   padding: 48px 24px 72px;
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 32px;
   animation: fadeIn 0.8s ease;
 }
 
 .app-header {
   position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -129,6 +138,7 @@ p {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 24px;
+  width: 100%;
 }
 
 .login-shell {
@@ -287,11 +297,11 @@ p {
 }
 
 .workbench {
-  grid-column: span 12;
+  grid-column: span 7;
 }
 
 .inventory-panel {
-  grid-column: span 7;
+  grid-column: span 5;
 }
 
 .dm-panel {
@@ -584,6 +594,11 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  min-width: 0;
+}
+
+.almanac-column {
+  min-width: 0;
 }
 
 .almanac-column h3 {
@@ -606,6 +621,7 @@ button:disabled {
   background: rgba(15, 23, 42, 0.75);
   font-size: 13px;
   width: 100%;
+  min-width: 0;
   text-align: left;
   font-family: inherit;
   cursor: pointer;
@@ -727,6 +743,27 @@ button:disabled {
   max-height: 220px;
   overflow: auto;
   padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.inventory-edit::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inventory-edit::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.inventory-edit::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.inventory-edit:hover::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6);
 }
 
 .inventory-edit-row {
@@ -795,27 +832,51 @@ button:disabled {
 }
 
 @media (max-width: 960px) {
+  .app-shell {
+    padding: 32px 16px 56px;
+    max-width: 100%;
+  }
+
   .app-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .app-grid > .panel {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .app-header {
-    padding: 24px;
+    padding: 24px 140px 24px 20px;
   }
 
   .auth-pill {
     position: static;
+    align-self: stretch;
+    width: 100%;
     max-width: none;
+    padding: 10px 12px;
   }
 
   .almanac-grid {
     grid-template-columns: 1fr;
   }
 
+  .almanac-panel {
+    width: 100%;
+  }
+
+  .almanac-slot {
+    min-width: 0;
+  }
+
   .workbench,
   .inventory-panel,
   .dm-panel {
-    grid-column: span 1;
+    grid-column: 1 / -1;
+    width: 100%;
   }
 
   .workbench-grid {
@@ -825,7 +886,17 @@ button:disabled {
 
 @media (max-width: 640px) {
   .app-shell {
-    padding: 32px 18px 56px;
+    padding: 28px 14px 48px;
+  }
+
+  .app-header {
+    padding: 20px 120px 20px 16px;
+  }
+
+  .auth-pill {
+    align-self: flex-end;
+    max-width: 200px;
+    padding: 8px 10px;
   }
 
   .panel {

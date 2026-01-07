@@ -7,7 +7,7 @@ function App() {
     <div className="app-shell">
       <header className="app-header">
         <p className="eyebrow">D&D Crafting System</p>
-        <h1>Hayleeiah's Crafting Workbench</h1>
+        <h1>Hayleeiah's Workbench</h1>
       </header>
       <IngredientSelector />
       <footer className="app-footer">
