@@ -1,0 +1,407 @@
+[
+  {
+    "id": 1,
+    "name": "Perfume of Bewitching",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "This tiny vial contains magic perfume, enough for one use. You can take a Magic action to apply the perfume to yourself, and its effect lasts 1 hour. For the duration, you have Advantage on all Charisma (Deception and Persuasion) checks made to influence a creature within 5 feet of yourself.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 2,
+    "name": "Perfume of Bewitching",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Common",
+    "effect": "This tiny vial contains magic perfume, enough for one use. You can take a Magic action to apply the perfume to yourself, and its effect lasts 1 hour. For the duration, you have Advantage on all Charisma (Deception and Persuasion) checks made to influence a creature within 5 feet of yourself.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 3,
+    "name": "Biza's Breath",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to this poison must succeed on a DC 16 Constitution saving throw or become poisoned for 1 minute. The poisoned creature must use its action to make a melee attack against a randomly determined creature within its reach. If there is no other creature within its reach, the poisoned creature does nothing on its turn. The creature can repeat the saving throw at the end of each of its turns, ending the eﬀect on itself on a success",
+    "source": "JttRC"
+  },
+  {
+    "id": 4,
+    "name": "Biza's Breath",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to this poison must succeed on a DC 16 Constitution saving throw or become poisoned for 1 minute. The poisoned creature must use its action to make a melee attack against a randomly determined creature within its reach. If there is no other creature within its reach, the poisoned creature does nothing on its turn. The creature can repeat the saving throw at the end of each of its turns, ending the eﬀect on itself on a success",
+    "source": "JttRC"
+  },
+  {
+    "id": 5,
+    "name": "Carrion Crawler Mucus",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Carrion Crawler Mucus must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 1 minute. The creature also has the Paralyzed condition while Poisoned in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 6,
+    "name": "Carrion Crawler Mucus",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Carrion Crawler Mucus must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 1 minute. The creature also has the Paralyzed condition while Poisoned in this way. The creature repeats the save at the end of each of its turns, ending the effect on itself on a success.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 7,
+    "name": "Malice",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Malice must succeed on a DC 15 Constitution saving throw or have the Poisoned condition for 1 hour. The creature also has the Blinded condition while Poisoned in this way.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 8,
+    "name": "Malice",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Malice must succeed on a DC 15 Constitution saving throw or have the Poisoned condition for 1 hour. The creature also has the Blinded condition while Poisoned in this way.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 9,
+    "name": "Vial of Dread Poison",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This vial contains 3 doses of dread poison. As an action, you can apply one dose of this poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature takes 2d6 Psychic damage and must succeed on a DC 13 Constitution saving throw or be Frightened for 1 hour. While Frightened in this way, the creature has disadvantage on Intelligence, Wisdom, and Charisma saving throws.",
+    "source": "WG"
+  },
+  {
+    "id": 10,
+    "name": "Vial of Dread Poison",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Uncommon",
+    "effect": "This vial contains 3 doses of dread poison. As an action, you can apply one dose of this poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature takes 2d6 Psychic damage and must succeed on a DC 13 Constitution saving throw or be Frightened for 1 hour. While Frightened in this way, the creature has disadvantage on Intelligence, Wisdom, and Charisma saving throws.",
+    "source": "WG"
+  },
+  {
+    "id": 11,
+    "name": "Black Lotus Extract",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "A creature ingesting Black Lotus Extract must succeed on a DC 13 Constitution saving throw, or permanently forget all recent memory of the last 10 minutes.",
+    "source": "Homebrew"
+  },
+  {
+    "id": 12,
+    "name": "Drow Poison",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "This poison is typically made only by the drow, and only in a place far removed from sunlight. A creature subjected to this poison must succeed on a DC 13 Constitution saving throw or be poisoned for 1 hour. If the saving throw fails by 5 or more, the creature is also unconscious while poisoned in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+    "source": "Free Rules"
+  },
+  {
+    "id": 13,
+    "name": "Lolth's Sting",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Lolth’s Sting must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 1 hour. If the creature fails the save by 5 or more, the creature also has the Unconscious condition while Poisoned in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 14,
+    "name": "Oil of Taggit",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Oil of Taggit must succeed on a DC 13 Constitution saving throw or have the Poisoned condition for 24 hours. The creature also has the Unconscious condition while Poisoned in this way. It wakes up if it takes damage.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 15,
+    "name": "Midnight Tears",
+    "category": "Poison",
+    "qualityCategory": "Entropy",
+    "rarity": "Very Rare",
+    "effect": "A creature that ingests Midnight Tears suffers no effect until the stroke of midnight. Any effect that ends the Poisoned condition neutralizes this poison. If the poison hasn’t been neutralized before midnight, the creature makes a DC 17 Constitution saving throw, taking 31 (9d6) Poison damage on a failed save or half as much damage on a successful one.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 1,
+    "name": "Dazzling Bomb",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "A small bomb that, when set oﬀ, fills a 30 ft diameter sphere with a highly irritating powder. The bomb can be triggered either by a fuse or a tripwire. Creatures exposed to the powder are forced to make a DC 13 Dexterity saving throw or be stunned for 1 turn. Constructs are not aﬀected by this poison.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 2,
+    "name": "Dazzling Bomb",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Common",
+    "effect": "A small bomb that, when set oﬀ, fills a 30 ft diameter sphere with a highly irritating powder. The bomb can be triggered either by a fuse or a tripwire. Creatures exposed to the powder are forced to make a DC 13 Dexterity saving throw or be stunned for 1 turn. Constructs are not aﬀected by this poison.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 3,
+    "name": "Angel's Powder",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "A hyper fine, bright white powder with a faintly sweet aroma, this powder is to be blown into the face of the target before dispersing harmlessly into the air. The target has to make a DC 15 Charisma Saving throw. On a failed save, the target experiences an altered version of reality where it perceives everyone as trusted friends and becomes extremely suggestible to non-aggressive forms of persuasion and deception as well as to seduction for 1 hour. On a successful save, the target experiences no eﬀects.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 4,
+    "name": "Angel's Powder",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "A hyper fine, bright white powder with a faintly sweet aroma, this powder is to be blown into the face of the target before dispersing harmlessly into the air. The target has to make a DC 15 Charisma Saving throw. On a failed save, the target experiences an altered version of reality where it perceives everyone as trusted friends and becomes extremely suggestible to non-aggressive forms of persuasion and deception as well as to seduction for 1 hour. On a successful save, the target experiences no eﬀects.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 5,
+    "name": "Bane Berry Extract",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "Pink and smelling like strawberries, this is a poison that forces the drinker to make a DC 14 Constitution saving throw. On a failed save, the target becomes poisoned. While poisoned, the target has disadvantage against Strength, Constitution and Dexterity saving throws for 15 minutes. On successful save, the target experience no eﬀects.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 6,
+    "name": "Bane Berry Extract",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "Pink and smelling like strawberries, this is a poison that forces the drinker to make a DC 14 Constitution saving throw. On a failed save, the target becomes poisoned. While poisoned, the target has disadvantage against Strength, Constitution and Dexterity saving throws for 15 minutes. On successful save, the target experience no eﬀects.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 7,
+    "name": "Directed Delay",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "This black liquid is highly viscous, having the consistency of concentrated molasses. When brought in contact with the blood via an injury or injection, the target has to make a DC 15 Wisdom saving throw. On a failed save, the target experiences the eﬀect of the Slow spell and can remake the saving throw at the end of each turn. On a successful save, the target’s movement speed is reduced by 5 feet for 3 turns.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 8,
+    "name": "Directed Delay",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "This black liquid is highly viscous, having the consistency of concentrated molasses. When brought in contact with the blood via an injury or injection, the target has to make a DC 15 Wisdom saving throw. On a failed save, the target experiences the eﬀect of the Slow spell and can remake the saving throw at the end of each turn. On a successful save, the target’s movement speed is reduced by 5 feet for 3 turns.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 9,
+    "name": "Truth Serum",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Truth Serum must succeed on a DC 11 Constitution saving throw or have the Poisoned condition for 1 hour. The Poisoned creature can’t knowingly communicate a lie.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 10,
+    "name": "Truth Serum",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "A creature subjected to Truth Serum must succeed on a DC 11 Constitution saving throw or have the Poisoned condition for 1 hour. The Poisoned creature can’t knowingly communicate a lie.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 11,
+    "name": "Vial of Phase Poison",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Uncommon",
+    "effect": "This vial contains 3 doses of phase poison. As an action, you can apply one dose of this poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature takes 2d8 Force damage and must succeed on a DC 13 Charisma saving throw or disappear into the Ethereal Plane until the end of its next turn.",
+    "source": "WG"
+  },
+  {
+    "id": 12,
+    "name": "Essence of Ether",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "A creature inhaling Essence of Ether must succeed on a DC 15 Constitution saving throw or have the Poisoned condition for 8 hours. The creature also has the Unconscious condition while Poisoned in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 13,
+    "name": "Vial of Unraveling Poison",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Rare",
+    "effect": "This vial contains 3 doses of unraveling poison. As an action, you can apply one dose of this poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature takes 2d8 Force damage and must succeed on a DC 13 Constitution saving throw or be Poisoned for 1 minute. While Poisoned in this way, the creature can’t cast spells and any spells or magic effects on it, as well as the magical properties of each non-Artifact magic item it is carrying, are suppressed. The creature can repeat the saving throw at the end of each of its turns, ending the effect on a success.",
+    "source": "WG"
+  },
+  {
+    "id": 14,
+    "name": "Torpor",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "A creature subjected to Torpor poison must succeed on a DC 15 Constitution saving throw or have the Poisoned condition for 4d6 hours. The creature’s Speed is halved while the creature is Poisoned in this way.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 15,
+    "name": "Vial of Bloodboil Poison",
+    "category": "Poison",
+    "qualityCategory": "Resonance",
+    "rarity": "Very Rare",
+    "effect": "This vial contains 3 doses of bloodboil poison. As an action, you can apply one dose of the poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature must succeed on a DC 15 Wisdom saving throw or be affected as by the Dominate Monster spell for 1 hour or until you lose your concentration, as if concentrating on a spell. The target can repeat the saving throw whenever it takes damage, ending the effect on a success.",
+    "source": "WG"
+  },
+  {
+    "id": 1,
+    "name": "Basic Poison",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "You can use the poison in this vial to coat one slashing or piercing weapon or up to three pieces of ammunition. Applying the poison takes an action. A creature hit by the Poisoned weapon or ammunition must make a DC 10 Constitution saving throw or take 1d4 poison damage. Once applied, the poison retains potency for 1 minute before drying.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 2,
+    "name": "Basic Poison",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Common",
+    "effect": "You can use the poison in this vial to coat one slashing or piercing weapon or up to three pieces of ammunition. Applying the poison takes an action. A creature hit by the Poisoned weapon or ammunition must make a DC 10 Constitution saving throw or take 1d4 poison damage. Once applied, the poison retains potency for 1 minute before drying.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 3,
+    "name": "Assassin's Blood",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "A creature ingesting Assassin’s Blood makes a DC 10 Constitution saving throw. On a failed save, the creature takes 6 (1d12) Poison damage and has the Poisoned condition for 24 hours. On a successful save, the creature takes half as much damage only.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 4,
+    "name": "Assassin's Blood",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "A creature ingesting Assassin’s Blood makes a DC 10 Constitution saving throw. On a failed save, the creature takes 6 (1d12) Poison damage and has the Poisoned condition for 24 hours. On a successful save, the creature takes half as much damage only.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 5,
+    "name": "Dreamlily",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Consuming dreamlily causes disorienting euphoria and brings about remarkable resistance to pain. A creature under the effects of dreamlily is poisoned for 1 hour. While poisoned in this way, the creature is immune to fear, and the first time it drops to 0 hit points without being killed outright, it drops to 1 hit point instead.",
+    "source": "ERftLW"
+  },
+  {
+    "id": 6,
+    "name": "Dreamlily",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Consuming dreamlily causes disorienting euphoria and brings about remarkable resistance to pain. A creature under the effects of dreamlily is poisoned for 1 hour. While poisoned in this way, the creature is immune to fear, and the first time it drops to 0 hit points without being killed outright, it drops to 1 hit point instead.",
+    "source": "ERftLW"
+  },
+  {
+    "id": 7,
+    "name": "Lava Paste",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Though a mundane looking, yellowish paste, this concoction is anything but. Once applied on skin or clothing, the paste forces the target to make a DC 14 Constitution saving throw. On a failed save, the target takes 2d6 fire damage and becomes vulnerable against fire damage for 1 occasion for the next 12 hours, on a successful save the target takes half damage and does not become vulnerable.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 8,
+    "name": "Lava Paste",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Uncommon",
+    "effect": "Though a mundane looking, yellowish paste, this concoction is anything but. Once applied on skin or clothing, the paste forces the target to make a DC 14 Constitution saving throw. On a failed save, the target takes 2d6 fire damage and becomes vulnerable against fire damage for 1 occasion for the next 12 hours, on a successful save the target takes half damage and does not become vulnerable.",
+    "source": "PBaIG"
+  },
+  {
+    "id": 9,
+    "name": "Burnt Othur Fumes",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Burnt Othur Fumes must succeed on a DC 13 Constitution saving throw or take 10 (3d6) Poison damage, and it must repeat the save at the start of each of its turns. On each successive failed save, the creature takes 3 (1d6) Poison damage. After three successful saves, the poison ends.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 10,
+    "name": "Burnt Othur Fumes",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Burnt Othur Fumes must succeed on a DC 13 Constitution saving throw or take 10 (3d6) Poison damage, and it must repeat the save at the start of each of its turns. On each successive failed save, the creature takes 3 (1d6) Poison damage. After three successful saves, the poison ends.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 11,
+    "name": "Pale Tincture",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Pale Tincture must succeed on a DC 16 Constitution saving throw or take 3 (1d6) Poison damage and have the Poisoned condition. The Poisoned creature repeats the save every 24 hours, taking 3 (1d6) Poison damage on a failed save. The damage the poison deals can’t be healed by any means while the creature remains Poisoned. After seven successful saves against the poison, the creature is no longer Poisoned.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 12,
+    "name": "Serpent Venom",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "A creature subjected to Serpent Venom must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) Poison damage on a failed save or half as much damage on a successful one.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 13,
+    "name": "Vial of Spell Conduit Poison",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Rare",
+    "effect": "This vial contains 3 doses of spell conduit poison. As an action, you can apply one dose of this poison to a weapon or a piece of ammunition you’re holding. The first time you hit a creature with the poisoned weapon or ammunition within the next minute, the creature must succeed on a DC 15 Constitution saving throw or become hypersensitive to magic. For 1 hour, the creature has disadvantage on saving throws against spells and other magical effects and the first time each turn it takes damage from a spell, it takes an extra 1d8 of that damage.",
+    "source": "WG"
+  },
+  {
+    "id": 14,
+    "name": "Wyvern Poison",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Very Rare",
+    "effect": "A creature subjected to Wyvern Poison makes a DC 14 Constitution saving throw, taking 24 (7d6) Poison damage on a failed save or half as much damage on a successful one.",
+    "source": "DMG'24"
+  },
+  {
+    "id": 15,
+    "name": "Purple Worm Poison",
+    "category": "Poison",
+    "qualityCategory": "Potency",
+    "rarity": "Legendary",
+    "effect": "A creature subjected to Purple Worm Poison makes a DC 21 Constitution saving throw, taking 35 (10d6) Poison damage on a failed save or half as much damage on a successful one.",
+    "source": "DMG'24"
+  }
+]

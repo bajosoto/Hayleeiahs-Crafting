@@ -1,0 +1,402 @@
+[
+  {
+    "name": "Alkahest",
+    "potency": 0,
+    "resonance": 0,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "?"
+  },
+  {
+    "name": "Bat Wing",
+    "potency": 1,
+    "resonance": 0,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Giant Bats, Stirges"
+  },
+  {
+    "name": "Elemental Ember",
+    "potency": 0,
+    "resonance": 0,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Fire Elementals"
+  },
+  {
+    "name": "Forest Yarn",
+    "potency": 0,
+    "resonance": 1,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Forest, Underdark, Swamp"
+  },
+  {
+    "name": "Lion's Bonnet",
+    "potency": 0,
+    "resonance": 1,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Cave, Arctic, Mountain, Urban"
+  },
+  {
+    "name": "Shivercrystal",
+    "potency": 0,
+    "resonance": 2,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Frost Elementals"
+  },
+  {
+    "name": "Bone Shard",
+    "potency": 0,
+    "resonance": 2,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Skeletons, Undead"
+  },
+  {
+    "name": "Heartbloom",
+    "potency": 2,
+    "resonance": 1,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Cave, Plains"
+  },
+  {
+    "name": "Mooncap",
+    "potency": 0,
+    "resonance": 1,
+    "entropy": 2,
+    "rarity": "Common",
+    "source": "Swamp, Coastal, Plains"
+  },
+  {
+    "name": "Sunbark",
+    "potency": 0,
+    "resonance": 0,
+    "entropy": 3,
+    "rarity": "Common",
+    "source": "Jungle, Arctic"
+  },
+  {
+    "name": "Preening Peafeather",
+    "potency": 2,
+    "resonance": 0,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Cave, Underdark"
+  },
+  {
+    "name": "Toxic Spores",
+    "potency": 0,
+    "resonance": 3,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Myconids, Fungus Creatures"
+  },
+  {
+    "name": "Rootsap",
+    "potency": 1,
+    "resonance": 1,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Desert, Forest"
+  },
+  {
+    "name": "Sunleaf",
+    "potency": 2,
+    "resonance": 1,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Arctic, Forest"
+  },
+  {
+    "name": "Frozen Core",
+    "potency": 3,
+    "resonance": 0,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Ice Elementals, Mephits"
+  },
+  {
+    "name": "Spinebloom",
+    "potency": 0,
+    "resonance": 2,
+    "entropy": 2,
+    "rarity": "Common",
+    "source": "Coastal, Grassland"
+  },
+  {
+    "name": "Sundust",
+    "potency": 0,
+    "resonance": 4,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Jungle, Swamp, Arctic, Plains"
+  },
+  {
+    "name": "Wight Ash",
+    "potency": 1,
+    "resonance": 0,
+    "entropy": 3,
+    "rarity": "Common",
+    "source": "Wights, Revenants"
+  },
+  {
+    "name": "Moonbark",
+    "potency": 2,
+    "resonance": 1,
+    "entropy": 2,
+    "rarity": "Common",
+    "source": "Jungle, Grassland, Mountain, Cave"
+  },
+  {
+    "name": "Moondust",
+    "potency": 4,
+    "resonance": 0,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Mountain, Grassland"
+  },
+  {
+    "name": "Rootblossom",
+    "potency": 0,
+    "resonance": 0,
+    "entropy": 5,
+    "rarity": "Common",
+    "source": "Forest, Underdark"
+  },
+  {
+    "name": "Stormlily",
+    "potency": 0,
+    "resonance": 4,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Mountain, Swamp"
+  },
+  {
+    "name": "Stormpetal",
+    "potency": 3,
+    "resonance": 1,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Swamp, Arctic, Mountain"
+  },
+  {
+    "name": "Stormshard",
+    "potency": 1,
+    "resonance": 3,
+    "entropy": 1,
+    "rarity": "Common",
+    "source": "Forest, Grassland"
+  },
+  {
+    "name": "Suncap",
+    "potency": 1,
+    "resonance": 4,
+    "entropy": 0,
+    "rarity": "Common",
+    "source": "Desert, Cave, Mountain, Grassland"
+  },
+  {
+    "name": "Brightdust",
+    "potency": 1,
+    "resonance": 3,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Urban, Swamp, Mountain, Arctic"
+  },
+  {
+    "name": "Frostleaf",
+    "potency": 4,
+    "resonance": 0,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Mountain, Plains"
+  },
+  {
+    "name": "Dark Ichor",
+    "potency": 1,
+    "resonance": 5,
+    "entropy": 1,
+    "rarity": "Uncommon",
+    "source": "Trolls, Giant Toads, Oozes"
+  },
+  {
+    "name": "Glimmoss",
+    "potency": 1,
+    "resonance": 4,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Forest, Swamp"
+  },
+  {
+    "name": "Nightleaf",
+    "potency": 4,
+    "resonance": 1,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Forest, Coastal, Jungle"
+  },
+  {
+    "name": "Ironsap",
+    "potency": 4,
+    "resonance": 2,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Plains, Jungle, Desert"
+  },
+  {
+    "name": "Grooved Fly Saddle",
+    "potency": 1,
+    "resonance": 5,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Jungle, Cave, Desert"
+  },
+  {
+    "name": "Venom Gland",
+    "potency": 5,
+    "resonance": 3,
+    "entropy": 0,
+    "rarity": "Uncommon",
+    "source": "Snakes, Giant Spiders"
+  },
+  {
+    "name": "Ashplume",
+    "potency": 4,
+    "resonance": 0,
+    "entropy": 5,
+    "rarity": "Uncommon",
+    "source": "Greater Fire Elementals"
+  },
+  {
+    "name": "Duskcap",
+    "potency": 3,
+    "resonance": 4,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Desert, Plains, Arctic, Swamp"
+  },
+  {
+    "name": "Glimshard",
+    "potency": 4,
+    "resonance": 1,
+    "entropy": 4,
+    "rarity": "Uncommon",
+    "source": "Underdark, Arctic, Grassland"
+  },
+  {
+    "name": "Infernal Ash",
+    "potency": 3,
+    "resonance": 2,
+    "entropy": 4,
+    "rarity": "Uncommon",
+    "source": "Imps, Quasits"
+  },
+  {
+    "name": "Giant Puffball",
+    "potency": 3,
+    "resonance": 3,
+    "entropy": 3,
+    "rarity": "Uncommon",
+    "source": "Forest, Mountain"
+  },
+  {
+    "name": "Glimdust",
+    "potency": 3,
+    "resonance": 5,
+    "entropy": 2,
+    "rarity": "Uncommon",
+    "source": "Arctic, Grassland, Mountain, Plains"
+  },
+  {
+    "name": "Sparkstone",
+    "potency": 1,
+    "resonance": 5,
+    "entropy": 4,
+    "rarity": "Uncommon",
+    "source": "Lightning Elementals"
+  },
+  {
+    "name": "Ruby Morel",
+    "potency": 2,
+    "resonance": 4,
+    "entropy": 5,
+    "rarity": "Rare",
+    "source": "Forest, Cave"
+  },
+  {
+    "name": "Dusksap",
+    "potency": 4,
+    "resonance": 2,
+    "entropy": 5,
+    "rarity": "Rare",
+    "source": "Desert, Swamp, Jungle"
+  },
+  {
+    "name": "Ironblossom",
+    "potency": 5,
+    "resonance": 2,
+    "entropy": 4,
+    "rarity": "Rare",
+    "source": "Arctic, Mountain"
+  },
+  {
+    "name": "Nightcap",
+    "potency": 5,
+    "resonance": 4,
+    "entropy": 2,
+    "rarity": "Rare",
+    "source": "Desert, Forest, Arctic, Coastal"
+  },
+  {
+    "name": "Frostblossom",
+    "potency": 5,
+    "resonance": 4,
+    "entropy": 3,
+    "rarity": "Rare",
+    "source": "Desert, Coastal"
+  },
+  {
+    "name": "Ghost Dust",
+    "potency": 4,
+    "resonance": 4,
+    "entropy": 4,
+    "rarity": "Rare",
+    "source": "Specters, Wraiths"
+  },
+  {
+    "name": "Glimthorn",
+    "potency": 5,
+    "resonance": 3,
+    "entropy": 4,
+    "rarity": "Rare",
+    "source": "Mountain, Plains"
+  },
+  {
+    "name": "Putrid Slime",
+    "potency": 4,
+    "resonance": 5,
+    "entropy": 3,
+    "rarity": "Rare",
+    "source": "Oozes, Slimes"
+  },
+  {
+    "name": "Ironpetal",
+    "potency": 5,
+    "resonance": 5,
+    "entropy": 4,
+    "rarity": "Rare",
+    "source": "Desert, Arctic, Urban, Mountain"
+  },
+  {
+    "name": "Spinecap",
+    "potency": 5,
+    "resonance": 4,
+    "entropy": 5,
+    "rarity": "Rare",
+    "source": "Urban, Mountain, Desert"
+  }
+]
