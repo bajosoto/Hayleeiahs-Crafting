@@ -18,6 +18,15 @@ const TIE_RULES = {
   Poison: 'Entropy > Potency > Resonance'
 };
 const QUALITY_ORDER = { Potency: 0, Resonance: 1, Entropy: 2 };
+const LOCAL_LOGIN_DOMAIN = 'bajosoto.local';
+
+const getRarityClass = (rarity) => {
+  const normalized = (rarity || '').toLowerCase();
+  if (normalized.includes('uncommon')) return 'rarity-uncommon';
+  if (normalized.includes('common')) return 'rarity-common';
+  if (normalized.includes('legendary') || normalized.includes('rare')) return 'rarity-rare';
+  return '';
+};
 
 const normalizeQuality = (value) => {
   const normalized = (value || '').trim();
@@ -52,7 +61,8 @@ const normalizeRecipeRow = (row, disciplineFallback = '') => {
     effect: row.effect || '',
     description: row.description || '',
     source: row.source || '',
-    discipline
+    discipline,
+    discovered: Boolean(row.discovered)
   };
 };
 
@@ -65,6 +75,13 @@ const sortRecipes = (list) => {
   });
 };
 
+const buildLoginEmail = (value) => {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return '';
+  if (trimmed.includes('@')) return trimmed;
+  return `${trimmed}@${LOCAL_LOGIN_DOMAIN}`;
+};
+
 function IngredientSelector() {
   const hasSupabase = Boolean(supabase);
 
@@ -73,29 +90,26 @@ function IngredientSelector() {
   const [recipes, setRecipes] = useState({ Herbalism: [], Alchemy: [], Poison: [] });
   const [selectedNames, setSelectedNames] = useState(['', '', '']);
   const [discipline, setDiscipline] = useState('Herbalism');
-  const [deductOnCraft, setDeductOnCraft] = useState(true);
-  const [recipeMode, setRecipeMode] = useState('deterministic');
   const [result, setResult] = useState(null);
+  const [resultModalOpen, setResultModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [loadError, setLoadError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [dmMode, setDmMode] = useState(false);
   const [grantName, setGrantName] = useState('');
   const [grantQuantity, setGrantQuantity] = useState(1);
-  const [ingredientsDraft, setIngredientsDraft] = useState('');
-  const [recipesDraft, setRecipesDraft] = useState('');
   const [dmMessage, setDmMessage] = useState('');
   const [syncError, setSyncError] = useState('');
 
   const [session, setSession] = useState(null);
   const [userRole, setUserRole] = useState('anonymous');
-  const [authEmail, setAuthEmail] = useState('');
+  const [authUsername, setAuthUsername] = useState('');
   const [authPassword, setAuthPassword] = useState('');
   const [authMessage, setAuthMessage] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
 
   const canEditData = !hasSupabase || userRole === 'dm';
   const canWriteInventory = !hasSupabase || userRole === 'dm' || userRole === 'party';
+  const showAuthOnly = hasSupabase && !session;
 
   useEffect(() => {
     if (!hasSupabase) return;
@@ -140,18 +154,17 @@ function IngredientSelector() {
   }, [hasSupabase]);
 
   useEffect(() => {
-    if (hasSupabase && userRole !== 'dm') {
-      setDmMode(false);
-    }
-  }, [hasSupabase, userRole]);
-
-  useEffect(() => {
     let active = true;
     const loadData = async () => {
       try {
         setLoading(true);
         setLoadError('');
         setSyncError('');
+
+        if (hasSupabase && !session) {
+          setLoading(false);
+          return;
+        }
 
         if (hasSupabase) {
           const [ingredientResult, inventoryResult, recipesResult] = await Promise.all([
@@ -263,18 +276,7 @@ function IngredientSelector() {
     return () => {
       active = false;
     };
-  }, [hasSupabase]);
-
-  useEffect(() => {
-    if (ingredients.length) {
-      setIngredientsDraft(JSON.stringify(ingredients, null, 2));
-    }
-  }, [ingredients]);
-
-  useEffect(() => {
-    const list = recipes[discipline] || [];
-    setRecipesDraft(JSON.stringify(list, null, 2));
-  }, [discipline, recipes]);
+  }, [hasSupabase, session]);
 
   const inventoryMap = useMemo(() => {
     const map = new Map();
@@ -320,6 +322,52 @@ function IngredientSelector() {
     return inventoryRows.filter((ingredient) => ingredient.quantity > 0);
   }, [inventoryRows]);
 
+  const almanacEntries = useMemo(() => {
+    const groups = { Potency: {}, Resonance: {}, Entropy: {} };
+    const list = recipes[discipline] || [];
+    list.forEach((recipe) => {
+      const quality = normalizeQuality(recipe.qualityCategory);
+      const slot = Number(recipe.recipeNo || recipe.id || 0);
+      if (!groups[quality] || !slot) return;
+      groups[quality][slot] = recipe;
+    });
+    return groups;
+  }, [recipes, discipline]);
+
+  const hasValidSelection = useMemo(() => {
+    return selectedNames.every(Boolean) && new Set(selectedNames).size === 3;
+  }, [selectedNames]);
+
+  const expectedResult = useMemo(() => {
+    if (!hasValidSelection) return null;
+    const recipeList = recipes[discipline] || [];
+    if (!recipeList.length) return null;
+    return calculateResult(selectedIngredients, discipline, recipeList);
+  }, [hasValidSelection, selectedIngredients, discipline, recipes]);
+
+  const resultIsKnown = Boolean(
+    result?.recipe && (result.wasDiscovered || result.recipe.discovered)
+  );
+  const expectedRecipe = expectedResult?.recipe || null;
+  const expectedIsKnown = Boolean(expectedRecipe?.discovered);
+  const expectedLabel = expectedRecipe
+    ? expectedIsKnown
+      ? expectedRecipe.name
+      : '???'
+    : 'Select ingredients';
+  const expectedBadgeClass = expectedRecipe ? getRarityClass(expectedRecipe.rarity) : 'expected-empty';
+
+  useEffect(() => {
+    if (!resultModalOpen) return;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setResultModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [resultModalOpen]);
+
   const handleSelectChange = (index, value) => {
     setSelectedNames((prev) => {
       const next = [...prev];
@@ -327,7 +375,6 @@ function IngredientSelector() {
       return next;
     });
     setError('');
-    setResult(null);
   };
 
   const persistInventory = async (updates) => {
@@ -345,6 +392,36 @@ function IngredientSelector() {
       return false;
     }
     return true;
+  };
+
+  const markRecipeDiscovered = async (recipe) => {
+    if (!recipe) return;
+    setRecipes((prev) => {
+      const next = { ...prev };
+      const list = prev[recipe.discipline] || [];
+      next[recipe.discipline] = list.map((item) => {
+        const sameSlot = item.recipeNo === recipe.recipeNo && item.qualityCategory === recipe.qualityCategory;
+        const sameName = item.name === recipe.name;
+        if (sameSlot && sameName) {
+          return { ...item, discovered: true };
+        }
+        return item;
+      });
+      return next;
+    });
+
+    if (!hasSupabase) return;
+    setSyncError('');
+    const targetSlot = recipe.recipeNo || recipe.id || 0;
+    const { error: updateError } = await supabase
+      .from('recipes')
+      .update({ discovered: true })
+      .eq('discipline', recipe.discipline)
+      .eq('recipe_no', targetSlot)
+      .eq('quality_category', recipe.qualityCategory);
+    if (updateError) {
+      setSyncError('Failed to sync recipe discovery.');
+    }
   };
 
   const handleCraft = async () => {
@@ -373,41 +450,55 @@ function IngredientSelector() {
       return;
     }
 
-    const outcome = calculateResult(selectedIngredients, discipline, recipeList, {
-      mode: recipeMode
+    const outcome = calculateResult(selectedIngredients, discipline, recipeList);
+
+    const wasDiscovered = Boolean(outcome.recipe?.discovered);
+    const revealOnCraft = Boolean(outcome.recipe && !wasDiscovered);
+    setResult({ ...outcome, wasDiscovered: wasDiscovered || revealOnCraft });
+    setResultModalOpen(true);
+
+    if (outcome.recipe && !wasDiscovered) {
+      await markRecipeDiscovered(outcome.recipe);
+    }
+
+    if (!canWriteInventory) {
+      setError('Sign in as DM or Party to deduct inventory.');
+      return;
+    }
+
+    const updates = selectedNames.map((name) => ({
+      name,
+      quantity: Math.max(0, (inventoryMap.get(name) ?? 0) - 1)
+    }));
+
+    const updatedQuantities = new Map(updates.map((item) => [item.name, item.quantity]));
+
+    setInventory((prev) => {
+      const next = prev.map((item) => ({ ...item }));
+      updates.forEach((update) => {
+        const index = next.findIndex((item) => item.name === update.name);
+        if (index >= 0) {
+          next[index].quantity = update.quantity;
+        }
+      });
+      return next;
     });
 
-    setResult(outcome);
+    await persistInventory(updates);
 
-    if (deductOnCraft) {
-      if (!canWriteInventory) {
-        setError('Sign in as DM or Party to deduct inventory.');
-        return;
-      }
-
-      const updates = selectedNames.map((name) => ({
-        name,
-        quantity: Math.max(0, (inventoryMap.get(name) ?? 0) - 1)
-      }));
-
-      setInventory((prev) => {
-        const next = prev.map((item) => ({ ...item }));
-        updates.forEach((update) => {
-          const index = next.findIndex((item) => item.name === update.name);
-          if (index >= 0) {
-            next[index].quantity = update.quantity;
-          }
-        });
-        return next;
-      });
-
-      await persistInventory(updates);
-    }
+    setSelectedNames((prev) =>
+      prev.map((name) => {
+        if (!name) return '';
+        const nextQty = updatedQuantities.get(name);
+        return nextQty === 0 ? '' : name;
+      })
+    );
   };
 
   const handleClear = () => {
     setSelectedNames(['', '', '']);
     setResult(null);
+    setResultModalOpen(false);
     setError('');
   };
 
@@ -466,122 +557,21 @@ function IngredientSelector() {
     await persistInventory([{ name, quantity }]);
   };
 
-  const replaceIngredientsInDb = async (nextIngredients) => {
-    if (!hasSupabase) return true;
-    if (!canEditData) {
-      setDmMessage('Sign in as DM to save ingredients.');
-      return false;
-    }
-
-    setDmMessage('Saving ingredients to Supabase...');
-    const { error: deleteError } = await supabase
-      .from('ingredients')
-      .delete()
-      .neq('name', '');
-    if (deleteError) {
-      setDmMessage('Failed to clear ingredients table.');
-      return false;
-    }
-
-    const { error: insertError } = await supabase
-      .from('ingredients')
-      .insert(nextIngredients);
-    if (insertError) {
-      setDmMessage('Failed to save ingredients.');
-      return false;
-    }
-
-    setDmMessage('Ingredients saved to Supabase.');
-    return true;
-  };
-
-  const replaceRecipesInDb = async (nextRecipes) => {
-    if (!hasSupabase) return true;
-    if (!canEditData) {
-      setDmMessage('Sign in as DM to save recipes.');
-      return false;
-    }
-
-    setDmMessage(`Saving ${discipline} recipes to Supabase...`);
-    const { error: deleteError } = await supabase
-      .from('recipes')
-      .delete()
-      .eq('discipline', discipline);
-    if (deleteError) {
-      setDmMessage('Failed to clear recipe list.');
-      return false;
-    }
-
-    const payload = nextRecipes.map((recipe) => ({
-      discipline,
-      recipe_no: recipe.recipeNo || recipe.id || 0,
-      name: recipe.name || '',
-      category: recipe.category || discipline,
-      quality_category: normalizeQuality(recipe.qualityCategory || recipe.quality_category || ''),
-      rarity: recipe.rarity || '',
-      effect: recipe.effect || '',
-      description: recipe.description || '',
-      source: recipe.source || ''
-    }));
-
-    const { error: insertError } = await supabase.from('recipes').insert(payload);
-    if (insertError) {
-      setDmMessage('Failed to save recipes.');
-      return false;
-    }
-
-    setDmMessage(`${discipline} recipes saved to Supabase.`);
-    return true;
-  };
-
-  const handleApplyIngredients = async () => {
-    try {
-      const parsed = JSON.parse(ingredientsDraft);
-      if (!Array.isArray(parsed)) throw new Error('Ingredients JSON must be an array.');
-      const normalized = parsed.map(normalizeIngredientRow).filter((item) => item.name);
-      const saved = await replaceIngredientsInDb(normalized);
-      if (saved) {
-        setIngredients(normalized);
-        setDmMessage('Ingredients updated in memory.');
-      }
-    } catch (err) {
-      setDmMessage('Invalid ingredients JSON.');
-    }
-  };
-
-  const handleApplyRecipes = async () => {
-    try {
-      const parsed = JSON.parse(recipesDraft);
-      if (!Array.isArray(parsed)) throw new Error('Recipes JSON must be an array.');
-      const normalized = sortRecipes(
-        parsed.map((row) => normalizeRecipeRow(row, discipline)).filter((item) => item.name)
-      );
-      const saved = await replaceRecipesInDb(normalized);
-      if (saved) {
-        setRecipes((prev) => ({ ...prev, [discipline]: normalized }));
-        setDmMessage(`${discipline} recipes updated in memory.`);
-      }
-    } catch (err) {
-      setDmMessage('Invalid recipes JSON.');
-    }
-  };
-
-  const handleLoadIngredientsDraft = () => {
-    setIngredientsDraft(JSON.stringify(ingredients, null, 2));
-  };
-
-  const handleLoadRecipesDraft = () => {
-    setRecipesDraft(JSON.stringify(recipes[discipline] || [], null, 2));
-  };
-
   const handleSignIn = async (event) => {
     event.preventDefault();
     if (!hasSupabase) return;
     setAuthLoading(true);
     setAuthMessage('');
 
+    const email = buildLoginEmail(authUsername);
+    if (!email) {
+      setAuthMessage('Enter your username.');
+      setAuthLoading(false);
+      return;
+    }
+
     const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: authEmail,
+      email,
       password: authPassword
     });
 
@@ -590,6 +580,7 @@ function IngredientSelector() {
     } else {
       setAuthMessage('Signed in successfully.');
       setAuthPassword('');
+      setAuthUsername('');
     }
 
     setAuthLoading(false);
@@ -608,82 +599,58 @@ function IngredientSelector() {
     setAuthLoading(false);
   };
 
+  if (showAuthOnly) {
+    return (
+      <main className="login-shell">
+        <section className="panel login-panel">
+          <div className="login-header">
+            <p className="eyebrow">Arcane Access</p>
+            <h2>Sign in to Craft</h2>
+          </div>
+          <form className="auth-form" onSubmit={handleSignIn}>
+            <label className="select-field">
+              <span>Username</span>
+              <input
+                type="text"
+                value={authUsername}
+                onChange={(event) => setAuthUsername(event.target.value)}
+                placeholder="dm or party"
+                required
+              />
+            </label>
+            <label className="select-field">
+              <span>Password</span>
+              <input
+                type="password"
+                value={authPassword}
+                onChange={(event) => setAuthPassword(event.target.value)}
+                required
+              />
+            </label>
+            <div className="auth-actions">
+              <button className="primary" type="submit" disabled={authLoading}>
+                Enter the Workbench
+              </button>
+            </div>
+          </form>
+          {authMessage && <div className="panel-callout">{authMessage}</div>}
+          {syncError && <div className="panel-callout error">{syncError}</div>}
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="app-grid">
-      <section className="panel auth-panel">
-        <div className="panel-header">
-          <div>
-            <h2>Access</h2>
-            <p className="panel-subtitle">Sign in to sync inventory and DM edits.</p>
-          </div>
-          <span className="badge">
-            {hasSupabase ? (session ? userRole : 'Guest') : 'Local'}
-          </span>
+      <section className="panel auth-pill">
+        <div className="auth-pill-head">
+          <span className="badge">{hasSupabase ? userRole : 'Local'}</span>
+          {hasSupabase && session && (
+            <button className="ghost" type="button" onClick={handleSignOut} disabled={authLoading}>
+              Log out
+            </button>
+          )}
         </div>
-
-        {!hasSupabase && (
-          <div className="panel-callout">
-            Supabase is not configured. The app is running on local JSON data only.
-          </div>
-        )}
-
-        {hasSupabase && (
-          <div className="auth-grid">
-            <div className="auth-status">
-              <p>
-                <strong>Status:</strong>{' '}
-                {session?.user?.email ? `Signed in as ${session.user.email}` : 'Not signed in'}
-              </p>
-              <p>
-                <strong>Role:</strong> {session ? userRole : 'Guest'}
-              </p>
-              <p className="hint">Inventory changes require DM or party login.</p>
-            </div>
-            <form className="auth-form" onSubmit={handleSignIn}>
-              {!session && (
-                <>
-                  <label className="select-field">
-                    <span>Email</span>
-                    <input
-                      type="email"
-                      value={authEmail}
-                      onChange={(event) => setAuthEmail(event.target.value)}
-                      required
-                    />
-                  </label>
-                  <label className="select-field">
-                    <span>Password</span>
-                    <input
-                      type="password"
-                      value={authPassword}
-                      onChange={(event) => setAuthPassword(event.target.value)}
-                      required
-                    />
-                  </label>
-                </>
-              )}
-              <div className="auth-actions">
-                {session ? (
-                  <button
-                    className="ghost"
-                    type="button"
-                    onClick={handleSignOut}
-                    disabled={authLoading}
-                  >
-                    Sign out
-                  </button>
-                ) : (
-                  <button className="primary" type="submit" disabled={authLoading}>
-                    Sign in
-                  </button>
-                )}
-              </div>
-            </form>
-          </div>
-        )}
-
-        {authMessage && <div className="panel-callout">{authMessage}</div>}
-        {syncError && <div className="panel-callout error">{syncError}</div>}
       </section>
 
       <section className="panel workbench">
@@ -692,7 +659,13 @@ function IngredientSelector() {
             <h2>Workbench</h2>
             <p className="panel-subtitle">Craft with three ingredients and a discipline.</p>
           </div>
-          <span className="badge">{discipline}</span>
+          <div className="panel-badges">
+            <span className="badge">{discipline}</span>
+            <div className={`expected-badge ${expectedBadgeClass}`}>
+              <span className="expected-label">Expected</span>
+              <span className="expected-name">{expectedLabel}</span>
+            </div>
+          </div>
         </div>
 
         {loading && <div className="panel-callout">Loading data...</div>}
@@ -714,12 +687,11 @@ function IngredientSelector() {
                       .filter((ingredient) => ingredient.quantity > 0)
                       .map((ingredient) => {
                       const alreadyPicked = selectedNames.includes(ingredient.name) && value !== ingredient.name;
-                      const outOfStock = ingredient.quantity <= 0;
                       return (
                         <option
                           key={ingredient.name}
                           value={ingredient.name}
-                          disabled={alreadyPicked || outOfStock}
+                          disabled={alreadyPicked}
                         >
                           {ingredient.name} ({ingredient.quantity} left)
                         </option>
@@ -767,37 +739,6 @@ function IngredientSelector() {
         </div>
 
         <div className="actions">
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={deductOnCraft}
-              onChange={(event) => setDeductOnCraft(event.target.checked)}
-            />
-            Deduct ingredients on craft
-          </label>
-          <div className="toggle-group">
-            <span>Recipe roll</span>
-            <label>
-              <input
-                type="radio"
-                name="recipe-mode"
-                value="deterministic"
-                checked={recipeMode === 'deterministic'}
-                onChange={(event) => setRecipeMode(event.target.value)}
-              />
-              Deterministic
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="recipe-mode"
-                value="random"
-                checked={recipeMode === 'random'}
-                onChange={(event) => setRecipeMode(event.target.value)}
-              />
-              Random
-            </label>
-          </div>
           <button
             className="primary"
             type="button"
@@ -809,42 +750,11 @@ function IngredientSelector() {
         </div>
 
         {error && <div className="panel-callout error">{error}</div>}
+        {syncError && <div className="panel-callout error">{syncError}</div>}
         {dominantAttribute && (
           <div className="panel-callout">
             Dominant attribute: {ATTRIBUTE_LABELS[dominantAttribute]}
             {isTie ? ' (tie-breaker applied)' : ''}
-          </div>
-        )}
-      </section>
-
-      <section className="panel result-panel">
-        <div className="panel-header">
-          <div>
-            <h2>Crafted Result</h2>
-            <p className="panel-subtitle">Your crafted item will appear here.</p>
-          </div>
-        </div>
-        {result?.recipe ? (
-          <div className="result-card">
-            <h3>{result.recipe.name}</h3>
-            <p className="result-meta">
-              {result.recipe.category} | {result.recipe.rarity}
-            </p>
-            <p className="result-effect">{result.recipe.effect}</p>
-            <div className="result-details">
-              <span>Dominant: {ATTRIBUTE_LABELS[result.dominantAttribute]}</span>
-              <span>
-                Tier: {result.tierIndex + 1} | Roll: {result.roll + 1}/15
-              </span>
-            </div>
-            {result.usedFallback && (
-              <p className="notice">Recipe list is short, so a fallback recipe was used.</p>
-            )}
-          </div>
-        ) : (
-          <div className="empty-state">
-            <p>No crafted item yet.</p>
-            <p>Select ingredients and craft to reveal a recipe.</p>
           </div>
         )}
       </section>
@@ -858,7 +768,10 @@ function IngredientSelector() {
         </div>
         <div className="inventory-list">
           {inventoryDisplayRows.map((ingredient) => (
-            <div className="inventory-row" key={ingredient.name}>
+            <div
+              className={`inventory-row ${getRarityClass(ingredient.rarity)}`}
+              key={ingredient.name}
+            >
               <div>
                 <h4>{ingredient.name}</h4>
                 <p className="inventory-meta">
@@ -874,32 +787,50 @@ function IngredientSelector() {
         </div>
       </section>
 
-      <section className="panel dm-panel">
+      <section className="panel almanac-panel">
         <div className="panel-header">
           <div>
-            <h2>DM Tools</h2>
-            <p className="panel-subtitle">Update campaign data and inventory.</p>
+            <h2>Almanac</h2>
+            <p className="panel-subtitle">Known {discipline} recipes by dominant attribute.</p>
           </div>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={dmMode}
-              disabled={!canEditData}
-              onChange={(event) => setDmMode(event.target.checked)}
-            />
-            Enable DM mode
-          </label>
+          <span className="badge">{discipline}</span>
         </div>
+        <div className="almanac-grid">
+          {['Potency', 'Resonance', 'Entropy'].map((quality) => (
+            <div className="almanac-column" key={quality}>
+              <h3>{quality}</h3>
+              <div className="almanac-slots">
+                {Array.from({ length: 15 }, (_, index) => {
+                  const slot = index + 1;
+                  const recipe = almanacEntries[quality]?.[slot];
+                  const isDiscovered = recipe?.discovered;
+                  return (
+                    <div
+                      className={`almanac-slot ${isDiscovered ? 'discovered' : 'unknown'} ${getRarityClass(
+                        recipe?.rarity
+                      )}`}
+                      key={`${quality}-${slot}`}
+                    >
+                      <span className="slot-index">{slot}</span>
+                      <span className="slot-name">{isDiscovered ? recipe?.name : '???'}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        {!canEditData ? (
-          <div className="empty-state">
-            <p>Sign in as DM to edit ingredients, recipes, or inventory.</p>
+      {canEditData && (
+        <section className="panel dm-panel">
+          <div className="panel-header">
+            <div>
+              <h2>DM Tools</h2>
+              <p className="panel-subtitle">Update campaign data and inventory.</p>
+            </div>
+            <span className="badge">DM</span>
           </div>
-        ) : !dmMode ? (
-          <div className="empty-state">
-            <p>Enable DM mode to grant or edit ingredients.</p>
-          </div>
-        ) : (
           <div className="dm-grid">
             <div className="dm-card">
               <h3>Grant ingredients</h3>
@@ -949,44 +880,60 @@ function IngredientSelector() {
               </div>
             </div>
 
-            <div className="dm-card dm-wide">
-              <h3>Ingredients JSON</h3>
-              <textarea
-                value={ingredientsDraft}
-                onChange={(event) => setIngredientsDraft(event.target.value)}
-                rows={10}
-              />
-              <div className="button-row">
-                <button type="button" className="ghost" onClick={handleLoadIngredientsDraft}>
-                  Load current
-                </button>
-                <button type="button" className="primary" onClick={handleApplyIngredients}>
-                  Apply JSON
-                </button>
-              </div>
-            </div>
-
-            <div className="dm-card dm-wide">
-              <h3>{discipline} recipes JSON</h3>
-              <textarea
-                value={recipesDraft}
-                onChange={(event) => setRecipesDraft(event.target.value)}
-                rows={10}
-              />
-              <div className="button-row">
-                <button type="button" className="ghost" onClick={handleLoadRecipesDraft}>
-                  Load current
-                </button>
-                <button type="button" className="primary" onClick={handleApplyRecipes}>
-                  Apply JSON
-                </button>
-              </div>
-            </div>
-
             {dmMessage && <div className="panel-callout">{dmMessage}</div>}
           </div>
-        )}
-      </section>
+        </section>
+      )}
+
+      {resultModalOpen && result?.recipe && (
+        <div className="modal-overlay" onClick={() => setResultModalOpen(false)}>
+          <div className="modal-content" onClick={(event) => event.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Crafted Result</h3>
+              <button
+                className="ghost"
+                type="button"
+                onClick={() => setResultModalOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+            {resultIsKnown ? (
+              <div className={`result-card ${getRarityClass(result.recipe.rarity)}`}>
+                <h3>{result.recipe.name}</h3>
+                <p className="result-meta">
+                  {result.recipe.category} | {result.recipe.rarity}
+                </p>
+                <p className="result-effect">{result.recipe.effect}</p>
+                <div className="result-details">
+                  <span>Dominant: {ATTRIBUTE_LABELS[result.dominantAttribute]}</span>
+                  <span>
+                    Tier: {result.tierIndex + 1} | Roll: {result.roll + 1}/15
+                  </span>
+                </div>
+                {result.usedFallback && (
+                  <p className="notice">Recipe list is short, so a fallback recipe was used.</p>
+                )}
+              </div>
+            ) : (
+              <div className="result-card result-unknown">
+                <h3>Unknown Recipe</h3>
+                <p className="result-meta">
+                  {result.recipe.category} | {ATTRIBUTE_LABELS[result.dominantAttribute]}
+                </p>
+                <p className="result-effect">
+                  This formula has not been discovered. Crafting it will reveal the recipe in the
+                  Almanac.
+                </p>
+                <div className="result-details">
+                  <span>Slot: {result.roll + 1}/15</span>
+                  <span>Dominant: {ATTRIBUTE_LABELS[result.dominantAttribute]}</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

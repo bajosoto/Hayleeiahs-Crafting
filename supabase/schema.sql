@@ -20,8 +20,12 @@ create table if not exists public.recipes (
   effect text,
   description text,
   source text,
+  discovered boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+alter table if exists public.recipes
+  add column if not exists discovered boolean not null default false;
 
 create unique index if not exists recipes_unique_key
   on public.recipes (discipline, quality_category, recipe_no);
@@ -96,6 +100,11 @@ create policy "dm update recipes"
 create policy "dm delete recipes"
   on public.recipes for delete
   using (public.has_role('dm'));
+
+create policy "party discover recipes"
+  on public.recipes for update
+  using (public.has_role('party'))
+  with check (public.has_role('party') and discovered = true);
 
 -- Inventory write policies (DM + party)
 create policy "party insert inventory"
