@@ -89,6 +89,34 @@ p {
   gap: 24px;
 }
 
+.auth-panel {
+  grid-column: span 12;
+}
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.auth-status {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -448,6 +476,10 @@ button:disabled {
 
 @media (max-width: 960px) {
   .app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-grid {
     grid-template-columns: 1fr;
   }
 

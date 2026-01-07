@@ -15,7 +15,7 @@ function App() {
       </header>
       <IngredientSelector />
       <footer className="app-footer">
-        <p>Data is loaded from local JSON files. DM edits are session-only.</p>
+        <p>Data loads from Supabase when configured; otherwise from local JSON files.</p>
       </footer>
     </div>
   );

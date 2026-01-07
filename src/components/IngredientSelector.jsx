@@ -4,6 +4,7 @@ import {
   calculateTotals,
   resolveDominantAttribute
 } from '../utils/calculateResult';
+import { supabase } from '../lib/supabaseClient';
 
 const DISCIPLINES = ['Herbalism', 'Alchemy', 'Poison'];
 const ATTRIBUTE_LABELS = {
@@ -16,8 +17,57 @@ const TIE_RULES = {
   Alchemy: 'Potency > Resonance > Entropy',
   Poison: 'Entropy > Potency > Resonance'
 };
+const QUALITY_ORDER = { Potency: 0, Resonance: 1, Entropy: 2 };
+
+const normalizeQuality = (value) => {
+  const normalized = (value || '').trim();
+  const lower = normalized.toLowerCase();
+  if (lower === 'clarity') return 'Resonance';
+  if (lower === 'chaos') return 'Entropy';
+  if (lower === 'potency') return 'Potency';
+  if (lower === 'resonance') return 'Resonance';
+  if (lower === 'entropy') return 'Entropy';
+  return normalized;
+};
+
+const normalizeIngredientRow = (row) => ({
+  name: (row.name || '').trim(),
+  potency: Number(row.potency ?? 0),
+  resonance: Number(row.resonance ?? 0),
+  entropy: Number(row.entropy ?? 0),
+  rarity: row.rarity || '',
+  source: row.source || ''
+});
+
+const normalizeRecipeRow = (row, disciplineFallback = '') => {
+  const discipline = row.discipline || row.category || disciplineFallback;
+  const recipeNo = Number(row.recipe_no ?? row.recipeNo ?? row.id ?? 0);
+  return {
+    id: recipeNo || row.id || 0,
+    recipeNo,
+    name: row.name || '',
+    category: row.category || discipline,
+    qualityCategory: normalizeQuality(row.quality_category || row.qualityCategory || ''),
+    rarity: row.rarity || '',
+    effect: row.effect || '',
+    description: row.description || '',
+    source: row.source || '',
+    discipline
+  };
+};
+
+const sortRecipes = (list) => {
+  return [...list].sort((a, b) => {
+    const qa = QUALITY_ORDER[a.qualityCategory] ?? 99;
+    const qb = QUALITY_ORDER[b.qualityCategory] ?? 99;
+    if (qa !== qb) return qa - qb;
+    return (a.recipeNo || 0) - (b.recipeNo || 0);
+  });
+};
 
 function IngredientSelector() {
+  const hasSupabase = Boolean(supabase);
+
   const [ingredients, setIngredients] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [recipes, setRecipes] = useState({ Herbalism: [], Alchemy: [], Poison: [] });
@@ -35,48 +85,175 @@ function IngredientSelector() {
   const [ingredientsDraft, setIngredientsDraft] = useState('');
   const [recipesDraft, setRecipesDraft] = useState('');
   const [dmMessage, setDmMessage] = useState('');
+  const [syncError, setSyncError] = useState('');
+
+  const [session, setSession] = useState(null);
+  const [userRole, setUserRole] = useState('anonymous');
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authMessage, setAuthMessage] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+
+  const canEditData = !hasSupabase || userRole === 'dm';
+  const canWriteInventory = !hasSupabase || userRole === 'dm' || userRole === 'party';
+
+  useEffect(() => {
+    if (!hasSupabase) return;
+    let active = true;
+
+    const fetchRole = async (currentSession) => {
+      if (!currentSession?.user?.id) {
+        if (active) setUserRole('anonymous');
+        return;
+      }
+      const { data, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', currentSession.user.id)
+        .single();
+      if (!active) return;
+      if (roleError || !data?.role) {
+        setUserRole('anonymous');
+        return;
+      }
+      setUserRole(data.role);
+    };
+
+    const init = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!active) return;
+      setSession(data.session || null);
+      await fetchRole(data.session);
+    };
+
+    init();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession || null);
+      fetchRole(nextSession);
+    });
+
+    return () => {
+      active = false;
+      listener?.subscription?.unsubscribe();
+    };
+  }, [hasSupabase]);
+
+  useEffect(() => {
+    if (hasSupabase && userRole !== 'dm') {
+      setDmMode(false);
+    }
+  }, [hasSupabase, userRole]);
 
   useEffect(() => {
     let active = true;
     const loadData = async () => {
       try {
         setLoading(true);
-        const baseUrl = import.meta.env.BASE_URL || '/';
-        const [ingredientData, inventoryData, herb, alchemy, poison] = await Promise.all([
-          fetch(`${baseUrl}data/ingredients.json`).then((res) => res.json()),
-          fetch(`${baseUrl}data/inventory.json`).then((res) => res.json()),
-          fetch(`${baseUrl}data/recipes_herbalism.json`).then((res) => res.json()),
-          fetch(`${baseUrl}data/recipes_alchemy.json`).then((res) => res.json()),
-          fetch(`${baseUrl}data/recipes_poison.json`).then((res) => res.json())
-        ]);
+        setLoadError('');
+        setSyncError('');
 
-        if (!active) return;
+        if (hasSupabase) {
+          const [ingredientResult, inventoryResult, recipesResult] = await Promise.all([
+            supabase.from('ingredients').select('*').order('name', { ascending: true }),
+            supabase.from('inventory').select('*').order('name', { ascending: true }),
+            supabase.from('recipes').select('*')
+          ]);
 
-        setIngredients(ingredientData);
-        setInventory(inventoryData);
-        setRecipes({
-          Herbalism: herb,
-          Alchemy: alchemy,
-          Poison: poison
-        });
+          if (ingredientResult.error || inventoryResult.error || recipesResult.error) {
+            throw new Error('Supabase query failed');
+          }
 
-        const sortedInventory = [...inventoryData].sort((a, b) => a.name.localeCompare(b.name));
-        const initialSelection = sortedInventory
-          .filter((item) => item.quantity > 0)
-          .slice(0, 3)
-          .map((item) => item.name);
-        setSelectedNames([
-          initialSelection[0] || '',
-          initialSelection[1] || '',
-          initialSelection[2] || ''
-        ]);
+          const ingredientData = (ingredientResult.data || [])
+            .map(normalizeIngredientRow)
+            .filter((item) => item.name);
+          const inventoryData = (inventoryResult.data || []).map((row) => ({
+            name: row.name,
+            quantity: Number(row.quantity ?? 0)
+          }));
+          const recipeRows = (recipesResult.data || []).map((row) => normalizeRecipeRow(row));
 
-        const sortedIngredients = [...ingredientData].sort((a, b) => a.name.localeCompare(b.name));
-        setGrantName(sortedIngredients[0]?.name || '');
+          const grouped = { Herbalism: [], Alchemy: [], Poison: [] };
+          recipeRows.forEach((recipe) => {
+            if (grouped[recipe.discipline]) {
+              grouped[recipe.discipline].push(recipe);
+            }
+          });
+
+          const sortedRecipes = {
+            Herbalism: sortRecipes(grouped.Herbalism),
+            Alchemy: sortRecipes(grouped.Alchemy),
+            Poison: sortRecipes(grouped.Poison)
+          };
+
+          if (!active) return;
+          setIngredients(ingredientData);
+          setInventory(inventoryData);
+          setRecipes(sortedRecipes);
+
+          const sortedInventory = [...inventoryData].sort((a, b) => a.name.localeCompare(b.name));
+          const initialSelection = sortedInventory
+            .filter((item) => item.quantity > 0)
+            .slice(0, 3)
+            .map((item) => item.name);
+          setSelectedNames([
+            initialSelection[0] || '',
+            initialSelection[1] || '',
+            initialSelection[2] || ''
+          ]);
+
+          const sortedIngredients = [...ingredientData].sort((a, b) => a.name.localeCompare(b.name));
+          setGrantName(sortedIngredients[0]?.name || '');
+        } else {
+          const baseUrl = import.meta.env.BASE_URL || '/';
+          const [ingredientData, inventoryData, herb, alchemy, poison] = await Promise.all([
+            fetch(`${baseUrl}data/ingredients.json`).then((res) => res.json()),
+            fetch(`${baseUrl}data/inventory.json`).then((res) => res.json()),
+            fetch(`${baseUrl}data/recipes_herbalism.json`).then((res) => res.json()),
+            fetch(`${baseUrl}data/recipes_alchemy.json`).then((res) => res.json()),
+            fetch(`${baseUrl}data/recipes_poison.json`).then((res) => res.json())
+          ]);
+
+          if (!active) return;
+
+          const ingredientRows = ingredientData.map(normalizeIngredientRow);
+          const herbRecipes = sortRecipes(herb.map((row) => normalizeRecipeRow(row, 'Herbalism')));
+          const alchemyRecipes = sortRecipes(
+            alchemy.map((row) => normalizeRecipeRow(row, 'Alchemy'))
+          );
+          const poisonRecipes = sortRecipes(poison.map((row) => normalizeRecipeRow(row, 'Poison')));
+
+          setIngredients(ingredientRows);
+          setInventory(inventoryData);
+          setRecipes({
+            Herbalism: herbRecipes,
+            Alchemy: alchemyRecipes,
+            Poison: poisonRecipes
+          });
+
+          const sortedInventory = [...inventoryData].sort((a, b) => a.name.localeCompare(b.name));
+          const initialSelection = sortedInventory
+            .filter((item) => item.quantity > 0)
+            .slice(0, 3)
+            .map((item) => item.name);
+          setSelectedNames([
+            initialSelection[0] || '',
+            initialSelection[1] || '',
+            initialSelection[2] || ''
+          ]);
+
+          const sortedIngredients = [...ingredientRows].sort((a, b) => a.name.localeCompare(b.name));
+          setGrantName(sortedIngredients[0]?.name || '');
+        }
+
         setLoadError('');
       } catch (err) {
         if (!active) return;
-        setLoadError('Failed to load data. Check the JSON files in public/data.');
+        setLoadError(
+          hasSupabase
+            ? 'Failed to load data from Supabase. Check your tables and policies.'
+            : 'Failed to load data. Check the JSON files in public/data.'
+        );
       } finally {
         if (active) setLoading(false);
       }
@@ -86,7 +263,7 @@ function IngredientSelector() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [hasSupabase]);
 
   useEffect(() => {
     if (ingredients.length) {
@@ -153,7 +330,24 @@ function IngredientSelector() {
     setResult(null);
   };
 
-  const handleCraft = () => {
+  const persistInventory = async (updates) => {
+    if (!hasSupabase) return true;
+    if (!canWriteInventory) {
+      setError('Sign in as DM or Party to update inventory.');
+      return false;
+    }
+    setSyncError('');
+    const { error: upsertError } = await supabase
+      .from('inventory')
+      .upsert(updates, { onConflict: 'name' });
+    if (upsertError) {
+      setSyncError('Failed to sync inventory updates.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleCraft = async () => {
     setError('');
     setDmMessage('');
 
@@ -186,16 +380,28 @@ function IngredientSelector() {
     setResult(outcome);
 
     if (deductOnCraft) {
+      if (!canWriteInventory) {
+        setError('Sign in as DM or Party to deduct inventory.');
+        return;
+      }
+
+      const updates = selectedNames.map((name) => ({
+        name,
+        quantity: Math.max(0, (inventoryMap.get(name) ?? 0) - 1)
+      }));
+
       setInventory((prev) => {
         const next = prev.map((item) => ({ ...item }));
-        selectedNames.forEach((name) => {
-          const index = next.findIndex((item) => item.name === name);
+        updates.forEach((update) => {
+          const index = next.findIndex((item) => item.name === update.name);
           if (index >= 0) {
-            next[index].quantity = Math.max(0, next[index].quantity - 1);
+            next[index].quantity = update.quantity;
           }
         });
         return next;
       });
+
+      await persistInventory(updates);
     }
   };
 
@@ -205,7 +411,7 @@ function IngredientSelector() {
     setError('');
   };
 
-  const handleGrant = () => {
+  const handleGrant = async () => {
     setDmMessage('');
     const quantity = Number(grantQuantity);
     if (!grantName) {
@@ -216,6 +422,13 @@ function IngredientSelector() {
       setDmMessage('Enter a positive quantity.');
       return;
     }
+    if (!canWriteInventory) {
+      setDmMessage('Sign in as DM to grant inventory.');
+      return;
+    }
+
+    const current = inventoryMap.get(grantName) ?? 0;
+    const nextQuantity = current + quantity;
 
     setInventory((prev) => {
       const next = prev.map((item) => ({ ...item }));
@@ -223,16 +436,22 @@ function IngredientSelector() {
       if (index >= 0) {
         next[index].quantity += quantity;
       } else {
-        next.push({ name: grantName, quantity });
+        next.push({ name: grantName, quantity: nextQuantity });
       }
       return next;
     });
 
+    await persistInventory([{ name: grantName, quantity: nextQuantity }]);
     setDmMessage(`Granted ${quantity} ${grantName}.`);
   };
 
-  const handleInventoryEdit = (name, value) => {
+  const handleInventoryEdit = async (name, value) => {
     const quantity = Math.max(0, Number(value));
+    if (!canWriteInventory) {
+      setDmMessage('Sign in as DM to update inventory.');
+      return;
+    }
+
     setInventory((prev) => {
       const next = prev.map((item) => ({ ...item }));
       const index = next.findIndex((item) => item.name === name);
@@ -243,25 +462,105 @@ function IngredientSelector() {
       }
       return next;
     });
+
+    await persistInventory([{ name, quantity }]);
   };
 
-  const handleApplyIngredients = () => {
+  const replaceIngredientsInDb = async (nextIngredients) => {
+    if (!hasSupabase) return true;
+    if (!canEditData) {
+      setDmMessage('Sign in as DM to save ingredients.');
+      return false;
+    }
+
+    setDmMessage('Saving ingredients to Supabase...');
+    const { error: deleteError } = await supabase
+      .from('ingredients')
+      .delete()
+      .neq('name', '');
+    if (deleteError) {
+      setDmMessage('Failed to clear ingredients table.');
+      return false;
+    }
+
+    const { error: insertError } = await supabase
+      .from('ingredients')
+      .insert(nextIngredients);
+    if (insertError) {
+      setDmMessage('Failed to save ingredients.');
+      return false;
+    }
+
+    setDmMessage('Ingredients saved to Supabase.');
+    return true;
+  };
+
+  const replaceRecipesInDb = async (nextRecipes) => {
+    if (!hasSupabase) return true;
+    if (!canEditData) {
+      setDmMessage('Sign in as DM to save recipes.');
+      return false;
+    }
+
+    setDmMessage(`Saving ${discipline} recipes to Supabase...`);
+    const { error: deleteError } = await supabase
+      .from('recipes')
+      .delete()
+      .eq('discipline', discipline);
+    if (deleteError) {
+      setDmMessage('Failed to clear recipe list.');
+      return false;
+    }
+
+    const payload = nextRecipes.map((recipe) => ({
+      discipline,
+      recipe_no: recipe.recipeNo || recipe.id || 0,
+      name: recipe.name || '',
+      category: recipe.category || discipline,
+      quality_category: normalizeQuality(recipe.qualityCategory || recipe.quality_category || ''),
+      rarity: recipe.rarity || '',
+      effect: recipe.effect || '',
+      description: recipe.description || '',
+      source: recipe.source || ''
+    }));
+
+    const { error: insertError } = await supabase.from('recipes').insert(payload);
+    if (insertError) {
+      setDmMessage('Failed to save recipes.');
+      return false;
+    }
+
+    setDmMessage(`${discipline} recipes saved to Supabase.`);
+    return true;
+  };
+
+  const handleApplyIngredients = async () => {
     try {
       const parsed = JSON.parse(ingredientsDraft);
       if (!Array.isArray(parsed)) throw new Error('Ingredients JSON must be an array.');
-      setIngredients(parsed);
-      setDmMessage('Ingredients updated in memory.');
+      const normalized = parsed.map(normalizeIngredientRow).filter((item) => item.name);
+      const saved = await replaceIngredientsInDb(normalized);
+      if (saved) {
+        setIngredients(normalized);
+        setDmMessage('Ingredients updated in memory.');
+      }
     } catch (err) {
       setDmMessage('Invalid ingredients JSON.');
     }
   };
 
-  const handleApplyRecipes = () => {
+  const handleApplyRecipes = async () => {
     try {
       const parsed = JSON.parse(recipesDraft);
       if (!Array.isArray(parsed)) throw new Error('Recipes JSON must be an array.');
-      setRecipes((prev) => ({ ...prev, [discipline]: parsed }));
-      setDmMessage(`${discipline} recipes updated in memory.`);
+      const normalized = sortRecipes(
+        parsed.map((row) => normalizeRecipeRow(row, discipline)).filter((item) => item.name)
+      );
+      const saved = await replaceRecipesInDb(normalized);
+      if (saved) {
+        setRecipes((prev) => ({ ...prev, [discipline]: normalized }));
+        setDmMessage(`${discipline} recipes updated in memory.`);
+      }
     } catch (err) {
       setDmMessage('Invalid recipes JSON.');
     }
@@ -275,8 +574,118 @@ function IngredientSelector() {
     setRecipesDraft(JSON.stringify(recipes[discipline] || [], null, 2));
   };
 
+  const handleSignIn = async (event) => {
+    event.preventDefault();
+    if (!hasSupabase) return;
+    setAuthLoading(true);
+    setAuthMessage('');
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: authEmail,
+      password: authPassword
+    });
+
+    if (signInError) {
+      setAuthMessage(signInError.message);
+    } else {
+      setAuthMessage('Signed in successfully.');
+      setAuthPassword('');
+    }
+
+    setAuthLoading(false);
+  };
+
+  const handleSignOut = async () => {
+    if (!hasSupabase) return;
+    setAuthLoading(true);
+    setAuthMessage('');
+    const { error: signOutError } = await supabase.auth.signOut();
+    if (signOutError) {
+      setAuthMessage(signOutError.message);
+    } else {
+      setAuthMessage('Signed out.');
+    }
+    setAuthLoading(false);
+  };
+
   return (
     <main className="app-grid">
+      <section className="panel auth-panel">
+        <div className="panel-header">
+          <div>
+            <h2>Access</h2>
+            <p className="panel-subtitle">Sign in to sync inventory and DM edits.</p>
+          </div>
+          <span className="badge">
+            {hasSupabase ? (session ? userRole : 'Guest') : 'Local'}
+          </span>
+        </div>
+
+        {!hasSupabase && (
+          <div className="panel-callout">
+            Supabase is not configured. The app is running on local JSON data only.
+          </div>
+        )}
+
+        {hasSupabase && (
+          <div className="auth-grid">
+            <div className="auth-status">
+              <p>
+                <strong>Status:</strong>{' '}
+                {session?.user?.email ? `Signed in as ${session.user.email}` : 'Not signed in'}
+              </p>
+              <p>
+                <strong>Role:</strong> {session ? userRole : 'Guest'}
+              </p>
+              <p className="hint">Inventory changes require DM or party login.</p>
+            </div>
+            <form className="auth-form" onSubmit={handleSignIn}>
+              {!session && (
+                <>
+                  <label className="select-field">
+                    <span>Email</span>
+                    <input
+                      type="email"
+                      value={authEmail}
+                      onChange={(event) => setAuthEmail(event.target.value)}
+                      required
+                    />
+                  </label>
+                  <label className="select-field">
+                    <span>Password</span>
+                    <input
+                      type="password"
+                      value={authPassword}
+                      onChange={(event) => setAuthPassword(event.target.value)}
+                      required
+                    />
+                  </label>
+                </>
+              )}
+              <div className="auth-actions">
+                {session ? (
+                  <button
+                    className="ghost"
+                    type="button"
+                    onClick={handleSignOut}
+                    disabled={authLoading}
+                  >
+                    Sign out
+                  </button>
+                ) : (
+                  <button className="primary" type="submit" disabled={authLoading}>
+                    Sign in
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+        )}
+
+        {authMessage && <div className="panel-callout">{authMessage}</div>}
+        {syncError && <div className="panel-callout error">{syncError}</div>}
+      </section>
+
       <section className="panel workbench">
         <div className="panel-header">
           <div>
@@ -469,19 +878,24 @@ function IngredientSelector() {
         <div className="panel-header">
           <div>
             <h2>DM Tools</h2>
-            <p className="panel-subtitle">Adjust data in memory for this session.</p>
+            <p className="panel-subtitle">Update campaign data and inventory.</p>
           </div>
           <label className="toggle">
             <input
               type="checkbox"
               checked={dmMode}
+              disabled={!canEditData}
               onChange={(event) => setDmMode(event.target.checked)}
             />
             Enable DM mode
           </label>
         </div>
 
-        {!dmMode ? (
+        {!canEditData ? (
+          <div className="empty-state">
+            <p>Sign in as DM to edit ingredients, recipes, or inventory.</p>
+          </div>
+        ) : !dmMode ? (
           <div className="empty-state">
             <p>Enable DM mode to grant or edit ingredients.</p>
           </div>
