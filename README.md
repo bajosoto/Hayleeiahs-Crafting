@@ -116,3 +116,20 @@ You can ask Copilot Chat to help with:
 - Creating a DM-only editor for ingredients and inventory
 
 The web app will be hosted in GitHub.
+
+## ▶️ Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Then open the URL Vite prints (usually `http://localhost:5173/`).
+
+## 🚀 Deploy to GitHub Pages
+
+```bash
+npm run deploy
+```
+
+This builds the app and publishes the `dist/` folder to the `gh-pages` branch.
