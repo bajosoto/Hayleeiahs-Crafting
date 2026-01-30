@@ -740,7 +740,7 @@ button:disabled {
 .inventory-edit {
   display: grid;
   gap: 10px;
-  max-height: 220px;
+  max-height: 340px;
   overflow: auto;
   padding-right: 6px;
   scrollbar-width: thin;
@@ -775,9 +775,37 @@ button:disabled {
   color: var(--muted);
 }
 
-.inventory-edit-row .ingredient-name {
+.name-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
   font-weight: 600;
   color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.name-button:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.4);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.name-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-edit input {
+  flex: 1;
+  min-width: 0;
+}
+
+button.tiny {
+  padding: 6px 10px;
+  font-size: 12px;
 }
 
 .inventory-edit-row .ingredient-stats {
@@ -793,15 +821,15 @@ button:disabled {
   text-align: right;
 }
 
-.inventory-edit-row.rarity-common .ingredient-name {
+.inventory-edit-row.rarity-common .name-button {
   color: var(--rarity-common);
 }
 
-.inventory-edit-row.rarity-uncommon .ingredient-name {
+.inventory-edit-row.rarity-uncommon .name-button {
   color: var(--rarity-uncommon);
 }
 
-.inventory-edit-row.rarity-rare .ingredient-name {
+.inventory-edit-row.rarity-rare .name-button {
   color: var(--rarity-rare);
 }
 

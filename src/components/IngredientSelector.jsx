@@ -102,10 +102,11 @@ function IngredientSelector() {
   const [error, setError] = useState('');
   const [loadError, setLoadError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [grantName, setGrantName] = useState('');
-  const [grantQuantity, setGrantQuantity] = useState(1);
   const [dmMessage, setDmMessage] = useState('');
   const [syncError, setSyncError] = useState('');
+  const [editingName, setEditingName] = useState('');
+  const [nameDraft, setNameDraft] = useState('');
+  const [renaming, setRenaming] = useState(false);
 
   const [session, setSession] = useState(null);
   const [userRole, setUserRole] = useState('anonymous');
@@ -222,8 +223,6 @@ function IngredientSelector() {
             initialSelection[2] || ''
           ]);
 
-          const sortedIngredients = [...ingredientData].sort((a, b) => a.name.localeCompare(b.name));
-          setGrantName(sortedIngredients[0]?.name || '');
         } else {
           const baseUrl = import.meta.env.BASE_URL || '/';
           const [ingredientData, inventoryData, herb, alchemy, poison] = await Promise.all([
@@ -262,8 +261,6 @@ function IngredientSelector() {
             initialSelection[2] || ''
           ]);
 
-          const sortedIngredients = [...ingredientRows].sort((a, b) => a.name.localeCompare(b.name));
-          setGrantName(sortedIngredients[0]?.name || '');
         }
 
         setLoadError('');
@@ -293,10 +290,6 @@ function IngredientSelector() {
 
   const ingredientMap = useMemo(() => {
     return new Map(ingredients.map((item) => [item.name, item]));
-  }, [ingredients]);
-
-  const sortedIngredients = useMemo(() => {
-    return [...ingredients].sort((a, b) => a.name.localeCompare(b.name));
   }, [ingredients]);
 
   const selectedIngredients = useMemo(() => {
@@ -382,6 +375,103 @@ function IngredientSelector() {
       return next;
     });
     setError('');
+  };
+
+  const startRename = (name) => {
+    setEditingName(name);
+    setNameDraft(name);
+    setDmMessage('');
+  };
+
+  const cancelRename = () => {
+    setEditingName('');
+    setNameDraft('');
+  };
+
+  const applyLocalRename = (oldName, newName) => {
+    setIngredients((prev) =>
+      prev.map((item) => (item.name === oldName ? { ...item, name: newName } : item))
+    );
+    setInventory((prev) =>
+      prev.map((item) => (item.name === oldName ? { ...item, name: newName } : item))
+    );
+    setSelectedNames((prev) => prev.map((name) => (name === oldName ? newName : name)));
+    setGrantName((prev) => (prev === oldName ? newName : prev));
+  };
+
+  const submitRename = async (oldName) => {
+    if (!canEditData) {
+      setDmMessage('Sign in as DM to rename ingredients.');
+      return;
+    }
+    const nextName = nameDraft.trim();
+    if (!nextName) {
+      setDmMessage('Enter a new ingredient name.');
+      return;
+    }
+    if (nextName === oldName) {
+      cancelRename();
+      return;
+    }
+    const exists = ingredients.some(
+      (item) => item.name.toLowerCase() === nextName.toLowerCase()
+    );
+    if (exists) {
+      setDmMessage('That ingredient name already exists.');
+      return;
+    }
+
+    const ingredient = ingredientMap.get(oldName);
+    if (!ingredient) {
+      setDmMessage('Ingredient not found.');
+      return;
+    }
+
+    setRenaming(true);
+    setDmMessage('');
+    setSyncError('');
+
+    if (hasSupabase) {
+      const insertPayload = {
+        name: nextName,
+        potency: ingredient.potency,
+        resonance: ingredient.resonance,
+        entropy: ingredient.entropy,
+        rarity: ingredient.rarity,
+        source: ingredient.source
+      };
+
+      const { error: insertError } = await supabase.from('ingredients').insert(insertPayload);
+      if (insertError) {
+        setRenaming(false);
+        setDmMessage('Failed to rename ingredient.');
+        return;
+      }
+
+      const { error: inventoryError } = await supabase
+        .from('inventory')
+        .update({ name: nextName })
+        .eq('name', oldName);
+      if (inventoryError) {
+        await supabase.from('ingredients').delete().eq('name', nextName);
+        setRenaming(false);
+        setDmMessage('Failed to rename ingredient.');
+        return;
+      }
+
+      const { error: deleteError } = await supabase
+        .from('ingredients')
+        .delete()
+        .eq('name', oldName);
+      if (deleteError) {
+        setSyncError('Renamed ingredient, but failed to remove the old entry.');
+      }
+    }
+
+    applyLocalRename(oldName, nextName);
+    setRenaming(false);
+    setDmMessage(`Renamed ${oldName} to ${nextName}.`);
+    cancelRename();
   };
 
   const openResultModal = (nextResult) => {
@@ -531,40 +621,6 @@ function IngredientSelector() {
     setResult(null);
     setResultModalOpen(false);
     setError('');
-  };
-
-  const handleGrant = async () => {
-    setDmMessage('');
-    const quantity = Number(grantQuantity);
-    if (!grantName) {
-      setDmMessage('Pick an ingredient to grant.');
-      return;
-    }
-    if (!Number.isFinite(quantity) || quantity <= 0) {
-      setDmMessage('Enter a positive quantity.');
-      return;
-    }
-    if (!canWriteInventory) {
-      setDmMessage('Sign in as DM to grant inventory.');
-      return;
-    }
-
-    const current = inventoryMap.get(grantName) ?? 0;
-    const nextQuantity = current + quantity;
-
-    setInventory((prev) => {
-      const next = prev.map((item) => ({ ...item }));
-      const index = next.findIndex((item) => item.name === grantName);
-      if (index >= 0) {
-        next[index].quantity += quantity;
-      } else {
-        next.push({ name: grantName, quantity: nextQuantity });
-      }
-      return next;
-    });
-
-    await persistInventory([{ name: grantName, quantity: nextQuantity }]);
-    setDmMessage(`Granted ${quantity} ${grantName}.`);
   };
 
   const handleInventoryEdit = async (name, value) => {
@@ -867,35 +923,6 @@ function IngredientSelector() {
           </div>
           <div className="dm-grid">
             <div className="dm-card">
-              <h3>Grant ingredients</h3>
-              <label className="select-field">
-                <span>Ingredient</span>
-                <select
-                  value={grantName}
-                  onChange={(event) => setGrantName(event.target.value)}
-                >
-                  {sortedIngredients.map((ingredient) => (
-                    <option key={ingredient.name} value={ingredient.name}>
-                      {ingredient.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="select-field">
-                <span>Quantity</span>
-                <input
-                  type="number"
-                  min="1"
-                  value={grantQuantity}
-                  onChange={(event) => setGrantQuantity(event.target.value)}
-                />
-              </label>
-              <button className="primary" type="button" onClick={handleGrant}>
-                Grant
-              </button>
-            </div>
-
-            <div className="dm-card">
               <h3>Edit inventory</h3>
               <div className="inventory-edit">
                 {inventoryRows.map((ingredient) => (
@@ -903,7 +930,48 @@ function IngredientSelector() {
                     className={`inventory-edit-row ${getRarityClass(ingredient.rarity)}`}
                     key={`edit-${ingredient.name}`}
                   >
-                    <span className="ingredient-name">{ingredient.name}</span>
+                    {editingName === ingredient.name ? (
+                      <div className="name-edit">
+                        <input
+                          type="text"
+                          value={nameDraft}
+                          onChange={(event) => setNameDraft(event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                              submitRename(ingredient.name);
+                            }
+                            if (event.key === 'Escape') {
+                              cancelRename();
+                            }
+                          }}
+                          autoFocus
+                        />
+                        <button
+                          className="ghost tiny"
+                          type="button"
+                          onClick={() => submitRename(ingredient.name)}
+                          disabled={renaming}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="ghost tiny"
+                          type="button"
+                          onClick={cancelRename}
+                          disabled={renaming}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        className="name-button"
+                        type="button"
+                        onClick={() => startRename(ingredient.name)}
+                      >
+                        {ingredient.name}
+                      </button>
+                    )}
                     <span className="ingredient-stats">
                       {ingredient.potency} / {ingredient.resonance} / {ingredient.entropy}
                     </span>
