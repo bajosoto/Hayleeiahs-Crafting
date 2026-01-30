@@ -563,7 +563,7 @@ button:disabled {
   gap: 14px;
   max-height: 420px;
   overflow: auto;
-  padding-right: 6px;
+  padding: 6px;
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
 }
@@ -766,7 +766,7 @@ button:disabled {
   gap: 10px;
   max-height: 340px;
   overflow: auto;
-  padding-right: 6px;
+  padding: 6px;
   scrollbar-width: thin;
   scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
 }
