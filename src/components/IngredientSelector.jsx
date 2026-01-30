@@ -946,22 +946,24 @@ function IngredientSelector() {
                           }}
                           autoFocus
                         />
-                        <button
-                          className="ghost tiny"
-                          type="button"
-                          onClick={() => submitRename(ingredient.name)}
-                          disabled={renaming}
-                        >
-                          Save
-                        </button>
-                        <button
-                          className="ghost tiny"
-                          type="button"
-                          onClick={cancelRename}
-                          disabled={renaming}
-                        >
-                          Cancel
-                        </button>
+                        <div className="name-actions">
+                          <button
+                            className="ghost tiny"
+                            type="button"
+                            onClick={() => submitRename(ingredient.name)}
+                            disabled={renaming}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="ghost tiny"
+                            type="button"
+                            onClick={cancelRename}
+                            disabled={renaming}
+                          >
+                            Cancel
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <button

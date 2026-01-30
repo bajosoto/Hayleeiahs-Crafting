@@ -793,14 +793,19 @@ button:disabled {
 }
 
 .name-edit {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: grid;
+  gap: 6px;
 }
 
 .name-edit input {
-  flex: 1;
+  width: 100%;
   min-width: 0;
+}
+
+.name-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 button.tiny {
