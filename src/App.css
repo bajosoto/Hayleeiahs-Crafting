@@ -561,6 +561,30 @@ button:disabled {
 .inventory-list {
   display: grid;
   gap: 14px;
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.inventory-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inventory-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.inventory-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.inventory-list:hover::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.6);
 }
 
 .inventory-row {
