@@ -19,6 +19,7 @@
   --rarity-common-bg: rgba(74, 222, 128, 0.16);
   --rarity-uncommon-bg: rgba(56, 189, 248, 0.16);
   --rarity-rare-bg: rgba(168, 85, 247, 0.16);
+  color-scheme: dark;
 }
 
 * {
@@ -353,6 +354,10 @@ textarea {
 
 input::placeholder {
   color: rgba(148, 163, 184, 0.8);
+}
+
+input[type='number'] {
+  color-scheme: dark;
 }
 
 input[type='radio'],
@@ -792,7 +797,7 @@ button:disabled {
 
 .inventory-edit-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 110px 88px;
+  grid-template-columns: minmax(0, 1fr) 110px 120px;
   align-items: center;
   gap: 12px;
   font-size: 13px;
@@ -845,9 +850,50 @@ button.tiny {
 
 .inventory-edit-row .inventory-input {
   justify-self: end;
-  width: 88px;
+  width: 64px;
   font-variant-numeric: tabular-nums;
   text-align: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.inventory-input::-webkit-inner-spin-button,
+.inventory-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inventory-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.stepper-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepper-btn {
+  width: 24px;
+  height: 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: rgba(56, 189, 248, 0.18);
+  color: #e0f2fe;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+}
+
+.stepper-btn:hover {
+  background: rgba(56, 189, 248, 0.28);
+}
+
+.stepper-btn:active {
+  transform: translateY(1px);
 }
 
 .inventory-edit-row.rarity-common .name-button {

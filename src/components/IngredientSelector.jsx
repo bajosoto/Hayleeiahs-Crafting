@@ -644,6 +644,11 @@ function IngredientSelector() {
     await persistInventory([{ name, quantity }]);
   };
 
+  const handleInventoryAdjust = (name, currentQuantity, delta) => {
+    const next = Math.max(0, Number(currentQuantity) + delta);
+    handleInventoryEdit(name, next);
+  };
+
   const handleSignIn = async (event) => {
     event.preventDefault();
     if (!hasSupabase) return;
@@ -977,16 +982,40 @@ function IngredientSelector() {
                     <span className="ingredient-stats">
                       {ingredient.potency} / {ingredient.resonance} / {ingredient.entropy}
                     </span>
-                    <input
-                      className="inventory-input"
-                      type="number"
-                      min="0"
-                      value={ingredient.quantity}
-                      onChange={(event) =>
-                        handleInventoryEdit(ingredient.name, event.target.value)
-                      }
-                      aria-label={`Inventory quantity for ${ingredient.name}`}
-                    />
+                    <div className="inventory-stepper">
+                      <input
+                        className="inventory-input"
+                        type="number"
+                        min="0"
+                        value={ingredient.quantity}
+                        onChange={(event) =>
+                          handleInventoryEdit(ingredient.name, event.target.value)
+                        }
+                        aria-label={`Inventory quantity for ${ingredient.name}`}
+                      />
+                      <div className="stepper-buttons">
+                        <button
+                          className="stepper-btn"
+                          type="button"
+                          onClick={() =>
+                            handleInventoryAdjust(ingredient.name, ingredient.quantity, 1)
+                          }
+                          aria-label={`Increase ${ingredient.name}`}
+                        >
+                          +
+                        </button>
+                        <button
+                          className="stepper-btn"
+                          type="button"
+                          onClick={() =>
+                            handleInventoryAdjust(ingredient.name, ingredient.quantity, -1)
+                          }
+                          aria-label={`Decrease ${ingredient.name}`}
+                        >
+                          -
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
